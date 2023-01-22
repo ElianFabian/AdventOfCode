@@ -6,7 +6,8 @@ import elianfabian.adventofcode.year2015.Year2015Day2Puzzle
 
 fun main()
 {
-    showLastPuzzle()
+    //showLastPuzzle()
+    showAllPuzzlesOfAllTheYears()
 }
 
 
@@ -43,8 +44,8 @@ private fun showAllPuzzlesOfAllTheYears()
 
         for ((day, puzzle) in days)
         {
-            println("--------- Day: $day ---------")
-            showPuzzleResults(puzzle)
+            println("\t--------- Day: $day ---------")
+            showPuzzleResults(puzzle, indentationCount = 1)
         }
     }
 }

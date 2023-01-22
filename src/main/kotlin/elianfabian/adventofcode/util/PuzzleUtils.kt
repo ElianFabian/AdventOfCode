@@ -12,10 +12,12 @@ data class PuzzleInfo<I : Any, out O : Any>(
     val parts: Set<Puzzle<I, O>>,
 )
 
-fun <I : Any, O : Any> showPuzzleResults(puzzleInfo: PuzzleInfo<I, O>)
+fun <I : Any, O : Any> showPuzzleResults(puzzleInfo: PuzzleInfo<I, O>, indentationCount: Int = 0)
 {
+    val indentation = "\t".repeat(indentationCount)
+    
     puzzleInfo.parts.forEachIndexed { index, puzzle ->
-        println("${index + 1}. ${puzzle.question}")
-        println("- Your answer is: ${puzzle.getResult(puzzleInfo.input)}\n")
+        println("$indentation ${index + 1}. ${puzzle.question}")
+        println("$indentation - Your answer is: ${puzzle.getResult(puzzleInfo.input)}\n")
     }
 }
