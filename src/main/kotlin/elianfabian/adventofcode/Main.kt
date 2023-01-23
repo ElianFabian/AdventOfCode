@@ -3,11 +3,12 @@ package elianfabian.adventofcode
 import elianfabian.adventofcode.util.showPuzzleResults
 import elianfabian.adventofcode.year2015.Year2015Day1Puzzle
 import elianfabian.adventofcode.year2015.Year2015Day2Puzzle
+import elianfabian.adventofcode.year2015.Year2015Day3Puzzle
 
 fun main()
 {
-    //showLastPuzzle()
-    showAllPuzzlesOfAllTheYears()
+    showLastPuzzle()
+    //showAllPuzzlesOfAllTheYears()
 }
 
 
@@ -15,6 +16,7 @@ val puzzlesGroupByYearAndDay = mapOf(
     2015 to mapOf(
         1 to Year2015Day1Puzzle,
         2 to Year2015Day2Puzzle,
+        3 to Year2015Day3Puzzle,
     ),
 )
 
