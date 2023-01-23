@@ -77,7 +77,7 @@ private val PuzzlePartTwo = object : Puzzle<String, Int>
 }
 
 
-//----------------------------------- Utils -----------------------------------
+//region Utils
 
 private data class Vector(val x: Int, val y: Int)
 
@@ -111,7 +111,7 @@ private inline fun <T> Iterable<T>.partitionIndexed(predicate: (index: Int, T) -
     return Pair(first, second)
 }
 
-// ---------------------------------------------------------------------------------
+//endregion
 
 
 val Year2015Day3Puzzle = PuzzleInfo(

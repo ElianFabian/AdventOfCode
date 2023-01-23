@@ -86,14 +86,14 @@ private val PuzzlePartTwo = object : Puzzle<String, Int>
 }
 
 
-//----------------------------------- Utils -----------------------------------
+//region Utils
 
 private val symbolToDirection = mapOf(
     '(' to 1,
     ')' to -1,
 )
 
-// ---------------------------------------------------------------------------------
+//endregion
 
 
 val Year2015Day1Puzzle = PuzzleInfo(

@@ -71,7 +71,7 @@ private val PuzzlePartTwo = object : Puzzle<String, Int>
     }
 }
 
-//----------------------------------- Utils -----------------------------------
+//region Utils
 
 private data class Dimensions(
     val length: Int,
@@ -99,7 +99,8 @@ private fun Dimensions.getPairOfSmallestSides(): Pair<Int, Int>
     return pair[0] to pair[1]
 }
 
-// ---------------------------------------------------------------------------------
+
+//endregion
 
 
 val Year2015Day2Puzzle = PuzzleInfo(
