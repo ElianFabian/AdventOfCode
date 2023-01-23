@@ -20,7 +20,7 @@ import elianfabian.adventofcode.util.PuzzleInfo
  */
 private val PuzzlePartOne = object : Puzzle<String, Int>
 {
-    override val question = "What is the decimal number that whose concatanation with the key and applying the md5 produces a string that starts with 5 zeros?"
+    override val question = "What is the decimal number that whose concatenation with the key and applying the md5 produces a string that starts with 5 zeros?"
 
 
     override fun getResult(input: String): Int
