@@ -48,13 +48,13 @@ private val PuzzlePartTwo = object : Puzzle<String, Int>
 
     override fun getResult(input: String): Int
     {
-        val fiveZeros = "0".repeat(6)
+        val sixZeros = "0".repeat(6)
 
         for (number in 1..Int.MAX_VALUE)
         {
             val keyAndDecimalNumber = "$input$number"
 
-            if (md5(keyAndDecimalNumber).startsWith(fiveZeros)) return number
+            if (md5(keyAndDecimalNumber).startsWith(sixZeros)) return number
         }
 
         return -1
