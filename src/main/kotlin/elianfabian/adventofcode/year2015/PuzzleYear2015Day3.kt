@@ -19,7 +19,7 @@ import elianfabian.adventofcode.util.PuzzleInfo
  * - "^>v<" delivers presents to 4 houses in a square, including twice to the house at his starting/ending location.
  * - "^v^v^v^v^v" delivers a bunch of presents to some very lucky children at only 2 houses.
  */
-private val PuzzlePartOne = object : Puzzle<String, Int>
+private val PuzzlePartOne = object : Puzzle
 {
     override val question = "How many houses receive at least one present?"
 
@@ -52,7 +52,7 @@ private val PuzzlePartOne = object : Puzzle<String, Int>
  * - "^>v<" now delivers presents to 3 houses, and Santa and Robo-Santa end up back where they started.
  * - "^v^v^v^v^v" now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
  */
-private val PuzzlePartTwo = object : Puzzle<String, Int>
+private val PuzzlePartTwo = object : Puzzle
 {
     override val question = "This year, how many houses receive at least one present?"
 

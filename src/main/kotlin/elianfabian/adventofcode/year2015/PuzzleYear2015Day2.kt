@@ -16,7 +16,7 @@ import elianfabian.adventofcode.util.PuzzleInfo
  * A present with dimensions 1x1x10 requires 2*1 + 2*10 + 2*10 = 42 square feet of wrapping paper plus 1 square foot of slack, for a total of 43 square feet.
  * All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
  */
-private val PuzzlePartOne = object : Puzzle<String, Int>
+private val PuzzlePartOne = object : Puzzle
 {
     override val question = "All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?"
 
@@ -48,7 +48,7 @@ private val PuzzlePartOne = object : Puzzle<String, Int>
  * A present with dimensions 1x1x10 requires 1+1+1+1 = 4 feet of ribbon to wrap the present plus 1*1*10 = 10 feet of ribbon for the bow, for a total of 14 feet.
  * How many total feet of ribbon should they order?
  */
-private val PuzzlePartTwo = object : Puzzle<String, Int>
+private val PuzzlePartTwo = object : Puzzle
 {
     override val question = "How many total feet of ribbon should they order?"
 

@@ -28,7 +28,7 @@ import elianfabian.adventofcode.util.PuzzleInfo
  *
  * To what floor do the instructions take Santa?
  */
-private val PuzzlePartOne = object : Puzzle<String, Int>
+private val PuzzlePartOne = object : Puzzle
 {
     override val question = "To what floor do the instructions take Santa?"
 
@@ -61,7 +61,7 @@ private val PuzzlePartOne = object : Puzzle<String, Int>
  * I think the statement of this part is confusing about the position, the example shows that the first position is 1 (instead of 0),
  * but when inserting the result in the page the expected value is given the convention of starting from 0.
  */
-private val PuzzlePartTwo = object : Puzzle<String, Int>
+private val PuzzlePartTwo = object : Puzzle
 {
     override val question = "What is the position of the character that causes Santa to first enter the basement?"
 
