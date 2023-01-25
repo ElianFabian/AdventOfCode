@@ -1,21 +1,22 @@
 package elianfabian.adventofcode
 
+import elianfabian.adventofcode.util.AocPuzzle
 import elianfabian.adventofcode.util.showPuzzleResults
 import elianfabian.adventofcode.year2015.*
 
 
 /**
  * Hi there, I'm Elián and in this project it's where I complete the Advent of Code puzzles in Kotlin.
- * 
+ *
  * The solutions I give in every puzzle I try to make them easy to read and understand rather than being the most efficient way to do it
  * since they're just simple puzzles.
- * 
+ *
  * In case you found this repository I hope my solutions can be interesting or helpful for you.
  */
 fun main()
 {
-    showLastPuzzle()
-    //showAllPuzzlesOfAllTheYears()
+    //showLastPuzzle()
+    showAllPuzzlesOfAllTheYears()
 }
 
 /**
@@ -26,11 +27,11 @@ fun main()
  */
 val puzzlesGroupByYearAndDay = mapOf(
     2015 to mapOf(
-        1 to Year2015Day1Puzzle,
-        2 to Year2015Day2Puzzle,
-        3 to Year2015Day3Puzzle,
-        4 to Year2015Day4Puzzle,
-        4 to Year2015Day5Puzzle,
+        1 to PuzzleYear2015Day1,
+        2 to PuzzleYear2015Day2,
+        3 to PuzzleYear2015Day3,
+        4 to PuzzleYear2015Day4,
+        5 to PuzzleYear2015Day5,
     ),
 )
 
@@ -61,7 +62,7 @@ private fun showAllPuzzlesOfAllTheYears()
         for ((day, puzzle) in days)
         {
             println("\t--------- Day: $day ---------")
-            showPuzzleResults(puzzle, indentationCount = 1)
+            showPuzzleResults(puzzle, indentationTabCount = 1)
         }
     }
 }
