@@ -79,8 +79,8 @@ private fun isStringNiceInPartTwo(string: String): Boolean
 
 private fun hasAtLeastThreeVowels(string: String): Boolean
 {
-    val vowels = "aeiou"
     val minVowelCount = 3
+    val vowels = "aeiou"
 
     val vowelsCount = string.count { it in vowels }
 
@@ -89,10 +89,9 @@ private fun hasAtLeastThreeVowels(string: String): Boolean
 
 private fun hasAtLeastOneLetterThatAppearsTwiceInARow(string: String): Boolean
 {
-    for (i in string.indices)
-    {
-        val currentChar = string[i]
-        val nextChar = string.getOrNull(i + 1)
+    string.forEachIndexed { index, currentChar ->
+
+        val nextChar = string.getOrNull(index + 1)
 
         if (currentChar == nextChar) return true
     }
@@ -104,12 +103,13 @@ private fun notContainsThePairsAbCdPqXy(string: String): Boolean
 {
     val forbiddenPairs = arrayOf("ab", "cd", "pq", "xy")
 
-    for (i in string.indices)
-    {
-        val currentChar = string[i]
-        val nextChar = string.getOrNull(i + 1)
+    string.forEachIndexed { index, currentChar ->
 
-        if ("$currentChar$nextChar" in forbiddenPairs) return false
+        val nextChar = string.getOrNull(index + 1)
+
+        val currentPair = "$currentChar$nextChar"
+
+        if (currentPair in forbiddenPairs) return false
     }
 
     return true
@@ -120,11 +120,10 @@ private fun containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(s
     val minPairCount = 2
     val letterPairsAndCount = mutableMapOf<String, Int>()
 
-    for (i in string.indices)
-    {
-        val previousChar = string.getOrNull(i - 1)
-        val currentChar = string[i]
-        val nextChar = string.getOrNull(i + 1)
+    string.forEachIndexed { index, currentChar ->
+
+        val previousChar = string.getOrNull(index - 1)
+        val nextChar = string.getOrNull(index + 1)
 
         val currentPair = "$currentChar$nextChar"
 
@@ -145,11 +144,10 @@ private fun containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(s
 
 private fun containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string: String): Boolean
 {
-    for (i in string.indices)
-    {
-        val previousChar = string.getOrNull(i - 1)
-        val currentChar = string[i]
-        val nextChar = string.getOrNull(i + 1)
+    string.forEachIndexed { index, currentChar ->
+
+        val previousChar = string.getOrNull(index - 1)
+        val nextChar = string.getOrNull(index + 1)
 
         if ((previousChar == nextChar) && (currentChar != previousChar)) return true
     }
