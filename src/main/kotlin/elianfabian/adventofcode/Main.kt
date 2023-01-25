@@ -32,6 +32,7 @@ val puzzlesGroupByYearAndDay = mapOf(
         3 to PuzzleYear2015Day3,
         4 to PuzzleYear2015Day4,
         5 to PuzzleYear2015Day5,
+        6 to PuzzleYear2015Day6,
     ),
 )
 
