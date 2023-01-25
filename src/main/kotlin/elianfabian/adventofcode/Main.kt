@@ -15,8 +15,8 @@ import elianfabian.adventofcode.year2015.*
  */
 fun main()
 {
-    //showLastPuzzle()
-    showAllPuzzlesOfAllTheYears()
+    showLastPuzzle()
+    //showAllPuzzlesOfAllTheYears()
 }
 
 /**

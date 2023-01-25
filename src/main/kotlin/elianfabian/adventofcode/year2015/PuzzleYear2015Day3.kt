@@ -1,6 +1,8 @@
 package elianfabian.adventofcode.year2015
 
 import elianfabian.adventofcode.util.AocPuzzle
+import elianfabian.adventofcode.util.Vector2
+import elianfabian.adventofcode.util.plus
 
 /**
  * --- Day 3: Perfectly Spherical Houses in a Vacuum --- https://adventofcode.com/2015/day/3
@@ -24,7 +26,7 @@ object PuzzleYear2015Day3 : AocPuzzle
      */
     override fun getResultOfPartOne(input: String): Int
     {
-        val initialLocation = Vector(0, 0) // Arbitrary position
+        val initialLocation = Vector2(0, 0) // Arbitrary position
         val allMovements = input.map { fromSymbolToCardinalDirection[it]!! }
 
         // Each house has a unique position so finding all unique vectors we will get all the houses that received at least one present
@@ -53,7 +55,7 @@ object PuzzleYear2015Day3 : AocPuzzle
      */
     override fun getResultOfPartTwo(input: String): Int
     {
-        val initialLocation = Vector(0, 0) // Arbitrary position
+        val initialLocation = Vector2(0, 0) // Arbitrary position
         val allMovements = input.map { fromSymbolToCardinalDirection[it]!! }
 
         val (santaMovements, roboSantaMovements) = allMovements.partitionIndexed { index, _ -> index % 2 == 0 }
@@ -75,14 +77,10 @@ object PuzzleYear2015Day3 : AocPuzzle
 
 //region Utils
 
-private data class Vector(val x: Int, val y: Int)
-
-private operator fun Vector.plus(other: Vector) = Vector(this.x + other.x, this.y + other.y)
-
-private val North = Vector(0, 1)
-private val South = Vector(0, -1)
-private val East = Vector(1, 0)
-private val West = Vector(-1, 0)
+private val North = Vector2(0, 1)
+private val South = Vector2(0, -1)
+private val East = Vector2(1, 0)
+private val West = Vector2(-1, 0)
 
 private val fromSymbolToCardinalDirection = mapOf(
     '^' to North,
