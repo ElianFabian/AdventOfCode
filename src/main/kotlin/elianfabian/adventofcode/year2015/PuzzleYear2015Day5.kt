@@ -24,6 +24,7 @@ object PuzzleYear2015Day5 : AocPuzzle
      * - jchzalrnumimnmhp is naughty because it has no double letter.
      * - haegwjzuvuyypxyu is naughty because it contains the string xy.
      * - dvszwmarrgswjxmb is naughty because it contains only one vowel.
+     *
      * How many strings are nice?
      */
     override fun getResultOfPartOne(input: String): Int
@@ -48,6 +49,7 @@ object PuzzleYear2015Day5 : AocPuzzle
      * - xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
      * - uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
      * - ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
+     *
      * How many strings are nice under these new rules?
      */
     override fun getResultOfPartTwo(input: String): Int

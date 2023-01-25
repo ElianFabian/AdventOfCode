@@ -55,9 +55,9 @@ object PuzzleYear2015Day1 : AocPuzzle
      * - ()()) causes him to enter the basement at character position 5.
      *
      * What is the position of the character that causes Santa to first enter the basement?
-     *
-     *
-     * ### Observations:
+     *#
+     * 
+     * ## Observations:
      * I think the statement of this part is confusing about the position, the example shows that the first position is 1 (instead of 0),
      * but when inserting the result in the page the expected value is given the convention of starting from 0.
      */
