@@ -12,6 +12,12 @@ repositories {
 }
 
 dependencies {
+
+    // https://github.com/ronmamo/reflections
+    implementation("org.reflections:reflections:0.10.2")
+    implementation("org.slf4j:slf4j-nop:1.7.30")
+
+    implementation(kotlin("reflect"))
     testImplementation(kotlin("test"))
 }
 

@@ -5,7 +5,7 @@ import elianfabian.adventofcode.util.*
 /**
  * --- Day 6: Probably a Fire Hazard --- https://adventofcode.com/2015/day/6
  */
-object PuzzleYear2015Day6 : AocPuzzle
+object PuzzleYear2015Day6 : AocPuzzle(2015, 6)
 {
     override val partOneQuestion = "After following the instructions, how many lights are lit?"
 
@@ -26,7 +26,7 @@ object PuzzleYear2015Day6 : AocPuzzle
      *
      * After following the instructions, how many lights are lit?
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val gridWidth = 1000
         val gridHeight = 1000
@@ -75,7 +75,7 @@ object PuzzleYear2015Day6 : AocPuzzle
      * - urn on 0,0 through 0,0 would increase the total brightness by 1.
      * - oggle 0,0 through 999,999 would increase the total brightness by 2000000.
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val gridWidth = 1000
         val gridHeight = 1000

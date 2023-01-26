@@ -1,9 +1,9 @@
 package elianfabian.adventofcode
 
-import elianfabian.adventofcode.util.AocPuzzle
-import elianfabian.adventofcode.util.showPuzzleResults
-import elianfabian.adventofcode.year2015.*
 
+import elianfabian.adventofcode.util.AocPuzzle
+import elianfabian.adventofcode.util.getAllAocPuzzlesGroupByYearAndDay
+import elianfabian.adventofcode.util.showPuzzleResults
 
 /**
  * Hi there, I'm Elián and in this project it's where I complete the Advent of Code puzzles in Kotlin.
@@ -15,46 +15,32 @@ import elianfabian.adventofcode.year2015.*
  */
 fun main()
 {
-    showLastPuzzle()
-    //showAllPuzzlesOfAllTheYears()
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+
+    showLastPuzzle(aocPuzzles)
+    //showAllPuzzlesOfAllTheYears(aocPuzzles)
 }
 
-/**
- * In here we have a variable with all the puzzles group by year and day.
- * I don't like to do it this way, but I haven't found any better way at the moment,
- * one way could be to make use of reflection and source generation, but I would prefer
- * to avoid that kind of solution, also it's kind of difficult to deal with it with my actual knowledge.
- */
-val puzzlesGroupByYearAndDay = mapOf(
-    2015 to mapOf(
-        1 to PuzzleYear2015Day1,
-        2 to PuzzleYear2015Day2,
-        3 to PuzzleYear2015Day3,
-        4 to PuzzleYear2015Day4,
-        5 to PuzzleYear2015Day5,
-        6 to PuzzleYear2015Day6,
-    ),
-)
 
-private fun showLastPuzzle()
+private fun showLastPuzzle(puzzlesGroupByYearAndDay: Map<Int, Map<Int, AocPuzzle>>)
 {
     val lastPuzzle = puzzlesGroupByYearAndDay.values.last().values.last()
 
     showPuzzleResults(lastPuzzle)
 }
 
-private fun showPuzzleFromYearAndDay(
+private fun Map<Int, Map<Int, AocPuzzle>>.showPuzzleFromYearAndDay(
     year: Int,
     day: Int,
 ) = runCatching()
 {
-    showPuzzleResults(puzzlesGroupByYearAndDay[year]!![day]!!)
+    showPuzzleResults(this[year]!![day]!!)
 }.onFailure()
 {
     println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
 }
 
-private fun showAllPuzzlesOfAllTheYears()
+private fun showAllPuzzlesOfAllTheYears(puzzlesGroupByYearAndDay: Map<Int, Map<Int, AocPuzzle>>)
 {
     for ((year, days) in puzzlesGroupByYearAndDay)
     {

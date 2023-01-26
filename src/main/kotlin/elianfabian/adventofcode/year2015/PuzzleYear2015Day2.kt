@@ -5,7 +5,7 @@ import elianfabian.adventofcode.util.AocPuzzle
 /**
  * --- Day 2: I Was Told There Would Be No Math --- https://adventofcode.com/2015/day/2
  */
-object PuzzleYear2015Day2 : AocPuzzle
+object PuzzleYear2015Day2 : AocPuzzle(2015, 2)
 {
     override val partOneQuestion = "All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?"
 
@@ -21,7 +21,7 @@ object PuzzleYear2015Day2 : AocPuzzle
      *
      * All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val allGiftDimensions = input.lines().map { fromLineToDimensions(it) }
 
@@ -50,7 +50,7 @@ object PuzzleYear2015Day2 : AocPuzzle
      *
      * How many total feet of ribbon should they order?
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val allGiftDimensions = input.lines().map { fromLineToDimensions(it) }
 

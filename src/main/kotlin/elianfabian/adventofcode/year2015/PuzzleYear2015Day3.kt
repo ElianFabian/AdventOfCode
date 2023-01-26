@@ -7,7 +7,7 @@ import elianfabian.adventofcode.util.plus
 /**
  * --- Day 3: Perfectly Spherical Houses in a Vacuum --- https://adventofcode.com/2015/day/3
  */
-object PuzzleYear2015Day3 : AocPuzzle
+object PuzzleYear2015Day3 : AocPuzzle(2015, 3)
 {
     override val partOneQuestion = "How many houses receive at least one present?"
 
@@ -26,7 +26,7 @@ object PuzzleYear2015Day3 : AocPuzzle
      * - "^>v<" delivers presents to 4 houses in a square, including twice to the house at his starting/ending location.
      * - "^v^v^v^v^v" delivers a bunch of presents to some very lucky children at only 2 houses.
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val initialLocation = Vector2(0, 0) // Arbitrary position
         val allMovements = input.map { fromSymbolToCardinalDirection[it]!! }
@@ -55,7 +55,7 @@ object PuzzleYear2015Day3 : AocPuzzle
      * - "^>v<" now delivers presents to 3 houses, and Santa and Robo-Santa end up back where they started.
      * - "^v^v^v^v^v" now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val initialLocation = Vector2(0, 0) // Arbitrary position
         val allMovements = input.map { fromSymbolToCardinalDirection[it]!! }

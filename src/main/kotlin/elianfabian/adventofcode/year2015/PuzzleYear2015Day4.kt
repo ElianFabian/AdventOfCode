@@ -7,7 +7,7 @@ import java.security.MessageDigest
 /**
  * --- Day 4: The Ideal Stocking Stuffer --- https://adventofcode.com/2015/day/4
  */
-object PuzzleYear2015Day4 : AocPuzzle
+object PuzzleYear2015Day4 : AocPuzzle(2015, 4)
 {
     override val partOneQuestion = "What is the decimal number that whose concatenation with the key and applying the md5 produces a string that starts with 5 zeros?"
 
@@ -21,7 +21,7 @@ object PuzzleYear2015Day4 : AocPuzzle
      * - If your secret key is abcdef, the answer is 609043, because the MD5 hash of abcdef609043 starts with five zeroes (000001dbbfa...), and it is the lowest such number to do so.
      * - If your secret key is pqrstuv, the lowest number it combines with to make an MD5 hash starting with five zeroes is 1048970; that is, the MD5 hash of pqrstuv1048970 looks like 000006136ef....
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val fiveZeros = "0".repeat(5)
 
@@ -40,7 +40,7 @@ object PuzzleYear2015Day4 : AocPuzzle
     /**
      * Now find one that starts with six zeroes.
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val sixZeros = "0".repeat(6)
 

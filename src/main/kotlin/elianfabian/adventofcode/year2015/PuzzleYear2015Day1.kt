@@ -5,7 +5,7 @@ import elianfabian.adventofcode.util.AocPuzzle
 /**
  * --- Day 1: Not Quite Lisp --- https://adventofcode.com/2015/day/
  */
-object PuzzleYear2015Day1 : AocPuzzle
+object PuzzleYear2015Day1 : AocPuzzle(2015, 1)
 {
     override val partOneQuestion = "To what floor do the instructions take Santa?"
 
@@ -32,7 +32,7 @@ object PuzzleYear2015Day1 : AocPuzzle
      *
      * To what floor do the instructions take Santa?
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val initialFloor = 0
 
@@ -61,7 +61,7 @@ object PuzzleYear2015Day1 : AocPuzzle
      * I think the statement of this part is confusing about the position, the example shows that the first position is 1 (instead of 0),
      * but when inserting the result in the page the expected value is given the convention of starting from 0.
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val initialFloor = 0
         val basementFloor = -1

@@ -5,7 +5,7 @@ import elianfabian.adventofcode.util.AocPuzzle
 /**
  * --- Day 5: Doesn't He Have Intern-Elves For This? --- https://adventofcode.com/2015/day/5
  */
-object PuzzleYear2015Day5 : AocPuzzle
+object PuzzleYear2015Day5 : AocPuzzle(2015, 5)
 {
     override val partOneQuestion = "How many strings are nice?"
 
@@ -27,7 +27,7 @@ object PuzzleYear2015Day5 : AocPuzzle
      *
      * How many strings are nice?
      */
-    override fun getResultOfPartOne(input: String): Int
+    override fun getResultOfPartOne(): Int
     {
         val allStrings = input.lines()
 
@@ -52,7 +52,7 @@ object PuzzleYear2015Day5 : AocPuzzle
      *
      * How many strings are nice under these new rules?
      */
-    override fun getResultOfPartTwo(input: String): Int
+    override fun getResultOfPartTwo(): Int
     {
         val allStrings = input.lines()
 
