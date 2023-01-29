@@ -70,3 +70,14 @@ data class MatchingInfo<out R : Any>(
 // That's why we define them in here when they are required.
 infix fun UShort.shl(bitCount: UShort): UShort = (this.toInt() shl bitCount.toInt()).toUShort()
 infix fun UShort.shr(bitCount: UShort): UShort = (this.toInt() shr bitCount.toInt()).toUShort()
+
+
+// https://stackoverflow.com/questions/71673452/how-to-convert-hex-string-to-ascii-string-in-kotlin
+fun String.decodeHex(): String
+{
+    require(length % 2 == 0) { "Must have an even length" }
+    return chunked(2)
+        .map { it.toInt(16).toByte() }
+        .toByteArray()
+        .toString(Charsets.ISO_8859_1)  // Or whichever encoding your input uses
+}
