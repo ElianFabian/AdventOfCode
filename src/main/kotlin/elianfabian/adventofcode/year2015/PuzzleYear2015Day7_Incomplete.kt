@@ -177,7 +177,7 @@ private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicG
                     wireReceiver = wireReceiver,
                 )
             },
-        ) ?: error("There was no match for this line: '$lines'.")
+        ) ?: error("There was no match for this line: '$line'.")
     }
 
     return listOfExpression
