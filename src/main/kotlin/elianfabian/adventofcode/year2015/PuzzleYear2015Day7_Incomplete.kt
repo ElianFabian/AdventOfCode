@@ -7,7 +7,7 @@ import kotlin.reflect.KFunction2
 /**
  * --- Day 7: Some Assembly Required --- https://adventofcode.com/2015/day/7
  */
-object PuzzleYear2015Day7 : AocPuzzle(2015, 7)
+object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7)
 {
     override val partOneQuestion = "In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?"
 
