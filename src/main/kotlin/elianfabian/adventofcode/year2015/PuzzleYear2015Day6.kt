@@ -55,7 +55,7 @@ object PuzzleYear2015Day6 : AocPuzzle(2015, 6)
         return grid.sumOf { it.count { isLightOn -> isLightOn } }
     }
 
-    override val partTwoQuestion: String = "What is the total brightness of all lights combined after following Santa's instructions?"
+    override val partTwoQuestion = "What is the total brightness of all lights combined after following Santa's instructions?"
 
     /**
      * You just finish implementing your winning light pattern when you realize you mistranslated Santa's message from Ancient Nordic Elvish.
