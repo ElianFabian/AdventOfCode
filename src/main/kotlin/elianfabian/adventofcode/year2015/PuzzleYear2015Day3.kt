@@ -2,6 +2,7 @@ package elianfabian.adventofcode.year2015
 
 import elianfabian.adventofcode.util.AocPuzzle
 import elianfabian.adventofcode.util.Vector2
+import elianfabian.adventofcode.util.partitionIndexed
 import elianfabian.adventofcode.util.plus
 
 /**
@@ -90,22 +91,6 @@ private val fromSymbolToCardinalDirection = mapOf(
     '>' to East,
     '<' to West,
 )
-
-private inline fun <T> Iterable<T>.partitionIndexed(predicate: (index: Int, T) -> Boolean): Pair<List<T>, List<T>>
-{
-    val first = mutableListOf<T>()
-    val second = mutableListOf<T>()
-
-    for ((index, element) in this.withIndex())
-    {
-        if (predicate(index, element))
-        {
-            first.add(element)
-        }
-        else second.add(element)
-    }
-    return Pair(first, second)
-}
 
 //endregion
 

@@ -81,3 +81,19 @@ fun String.decodeHex(): String
         .toByteArray()
         .toString(Charsets.ISO_8859_1)  // Or whichever encoding your input uses
 }
+
+inline fun <T> Iterable<T>.partitionIndexed(predicate: (index: Int, T) -> Boolean): Pair<List<T>, List<T>>
+{
+    val first = mutableListOf<T>()
+    val second = mutableListOf<T>()
+
+    for ((index, element) in this.withIndex())
+    {
+        if (predicate(index, element))
+        {
+            first.add(element)
+        }
+        else second.add(element)
+    }
+    return Pair(first, second)
+}
