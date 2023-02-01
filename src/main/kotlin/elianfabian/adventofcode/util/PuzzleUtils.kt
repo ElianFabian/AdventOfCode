@@ -97,3 +97,45 @@ inline fun <T> Iterable<T>.partitionIndexed(predicate: (index: Int, T) -> Boolea
     }
     return Pair(first, second)
 }
+
+fun <T> List<T>.permutations(): List<List<T>>
+{
+    if (this.size == 1) return listOf(this)
+
+    val permutations = mutableListOf<List<T>>()
+
+    for (element in this)
+    {
+        for (remainingPermutation in this.filterNot { it == element }.permutations())
+        {
+            permutations += listOf(element) + remainingPermutation
+        }
+    }
+
+    return permutations
+}
+
+// This one is faster, but the other is easier to understand, at least for me
+fun <T> List<T>.permutations2(): List<List<T>>
+{
+    val permutations = mutableSetOf<List<T>>()
+
+    this.ifEmpty { return permutations.apply { add(emptyList()) }.toList() }
+
+    val firstElement = this.first()
+
+    val elementsExceptFirst = this.drop(1)
+
+    val elementsPermutations = elementsExceptFirst.permutations2()
+
+    for (element in elementsPermutations)
+    {
+        for (i in 0..element.size)
+        {
+            val permutation = element.take(i) + firstElement + element.drop(i)
+
+            permutations += permutation
+        }
+    }
+    return permutations.toList()
+}
