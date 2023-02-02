@@ -139,3 +139,32 @@ fun <T> List<T>.permutations2(): List<List<T>>
     }
     return permutations.toList()
 }
+
+fun <K, V> MutableMap<K, V>.putIfAbsentOr(key: K, value: V, newValue: (oldValue: V) -> V): V?
+{
+    val oldValue = get(key)
+
+    if (oldValue == null)
+    {
+        put(key, value)
+    }
+    else put(key, newValue(oldValue))
+
+    return oldValue
+}
+
+operator fun StringBuilder.plusAssign(string: String): Unit
+{
+    append(string)
+}
+
+inline fun <T> applyTransformation(times: Int, initialValue: T, action: (value: T) -> T): T
+{
+    var result = initialValue
+
+    repeat(times)
+    {
+        result = action(result)
+    }
+    return result
+}

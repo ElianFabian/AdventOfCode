@@ -24,7 +24,7 @@ fun main()
 
 private fun showLastPuzzle(puzzlesGroupByYearAndDay: Map<Int, Map<Int, AocPuzzle>>)
 {
-    val lastPuzzle = puzzlesGroupByYearAndDay.values.last().values.last()
+    val lastPuzzle = puzzlesGroupByYearAndDay.values.last().values.sortedBy { it.year }.maxByOrNull { it.day }!!
 
     showPuzzleResults(lastPuzzle)
 }
