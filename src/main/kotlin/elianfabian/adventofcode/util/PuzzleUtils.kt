@@ -140,7 +140,7 @@ fun <T> List<T>.permutations2(): List<List<T>>
     return permutations.toList()
 }
 
-fun <K, V> MutableMap<K, V>.putIfAbsentOrUpdate(key: K, value: V, newValue: (oldValue: V) -> V): V?
+fun <K, V> MutableMap<K, V>.putOrUpdate(key: K, value: V, newValue: (oldValue: V) -> V): V?
 {
     val oldValue = get(key)
 
