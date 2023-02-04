@@ -3,6 +3,7 @@ package elianfabian.adventofcode
 
 import elianfabian.adventofcode.util.AocPuzzle
 import elianfabian.adventofcode.util.getAllAocPuzzlesGroupByYearAndDay
+import elianfabian.adventofcode.util.showLastPuzzle
 import elianfabian.adventofcode.util.showPuzzleResults
 
 /**
@@ -17,44 +18,5 @@ fun main()
 {
     showLastPuzzle()
     //showPuzzleFromYearAndDay(year = 2015, day = 5)
-    //showAllPuzzlesOfAllTheYears(aocPuzzles)
-}
-
-
-private fun showLastPuzzle()
-{
-    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
-    
-    val lastPuzzle = aocPuzzles.values.last().values.sortedBy { it.year }.maxByOrNull { it.day }!!
-
-    showPuzzleResults(lastPuzzle)
-}
-
-private fun showPuzzleFromYearAndDay(
-    year: Int,
-    day: Int,
-) = runCatching()
-{
-    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
-    
-    showPuzzleResults(aocPuzzles[year]!![day]!!)
-}.onFailure()
-{
-    println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
-}
-
-private fun showAllPuzzlesOfAllTheYears()
-{
-    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
-    
-    for ((year, days) in aocPuzzles)
-    {
-        println("------------------ Year: $year ------------------\n")
-
-        for ((day, puzzle) in days)
-        {
-            println("\t--------- Day: $day ---------")
-            showPuzzleResults(puzzle, indentationTabCount = 1)
-        }
-    }
+    //showAllPuzzlesOfAllTheYears()
 }

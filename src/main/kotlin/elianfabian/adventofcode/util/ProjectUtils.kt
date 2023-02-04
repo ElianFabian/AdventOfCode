@@ -47,3 +47,41 @@ fun showPuzzleResults(puzzle: AocPuzzle, indentationTabCount: Int = 0)
     println("$indentation 2. ${puzzle.partTwoQuestion}")
     println("$indentation - Your answer is: ${puzzle.getResultOfPartTwo()}\n")
 }
+
+fun showLastPuzzle()
+{
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+
+    val lastPuzzle = aocPuzzles.values.last().values.sortedBy { it.year }.maxByOrNull { it.day }!!
+
+    showPuzzleResults(lastPuzzle)
+}
+
+fun showPuzzleFromYearAndDay(
+    year: Int,
+    day: Int,
+) = runCatching()
+{
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+
+    showPuzzleResults(aocPuzzles[year]!![day]!!)
+}.onFailure()
+{
+    println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
+}
+
+fun showAllPuzzlesOfAllTheYears()
+{
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+
+    for ((year, days) in aocPuzzles)
+    {
+        println("------------------ Year: $year ------------------\n")
+
+        for ((day, puzzle) in days)
+        {
+            println("\t--------- Day: $day ---------")
+            showPuzzleResults(puzzle, indentationTabCount = 1)
+        }
+    }
+}
