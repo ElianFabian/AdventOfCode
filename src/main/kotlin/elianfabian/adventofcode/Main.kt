@@ -15,34 +15,39 @@ import elianfabian.adventofcode.util.showPuzzleResults
  */
 fun main()
 {
-    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
-
-    showLastPuzzle(aocPuzzles)
+    showLastPuzzle()
+    //showPuzzleFromYearAndDay(year = 2015, day = 5)
     //showAllPuzzlesOfAllTheYears(aocPuzzles)
 }
 
 
-private fun showLastPuzzle(puzzlesGroupByYearAndDay: Map<Int, Map<Int, AocPuzzle>>)
+private fun showLastPuzzle()
 {
-    val lastPuzzle = puzzlesGroupByYearAndDay.values.last().values.sortedBy { it.year }.maxByOrNull { it.day }!!
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+    
+    val lastPuzzle = aocPuzzles.values.last().values.sortedBy { it.year }.maxByOrNull { it.day }!!
 
     showPuzzleResults(lastPuzzle)
 }
 
-private fun Map<Int, Map<Int, AocPuzzle>>.showPuzzleFromYearAndDay(
+private fun showPuzzleFromYearAndDay(
     year: Int,
     day: Int,
 ) = runCatching()
 {
-    showPuzzleResults(this[year]!![day]!!)
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+    
+    showPuzzleResults(aocPuzzles[year]!![day]!!)
 }.onFailure()
 {
     println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
 }
 
-private fun showAllPuzzlesOfAllTheYears(puzzlesGroupByYearAndDay: Map<Int, Map<Int, AocPuzzle>>)
+private fun showAllPuzzlesOfAllTheYears()
 {
-    for ((year, days) in puzzlesGroupByYearAndDay)
+    val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
+    
+    for ((year, days) in aocPuzzles)
     {
         println("------------------ Year: $year ------------------\n")
 

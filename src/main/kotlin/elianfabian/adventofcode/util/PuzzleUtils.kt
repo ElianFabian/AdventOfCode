@@ -153,10 +153,16 @@ fun <K, V> MutableMap<K, V>.putIfAbsentOrUpdate(key: K, value: V, newValue: (old
     return oldValue
 }
 
-operator fun StringBuilder.plusAssign(string: String): Unit
+operator fun StringBuilder.plusAssign(string: String)
 {
     append(string)
 }
+
+operator fun StringBuilder.plusAssign(char: Char)
+{
+    append(char)
+}
+
 
 inline fun <T> applyTransformation(times: Int, initialValue: T, action: (value: T) -> T): T
 {

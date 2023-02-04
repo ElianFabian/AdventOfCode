@@ -8,10 +8,10 @@ import org.reflections.util.ConfigurationBuilder
 abstract class AocPuzzle(val year: Int, val day: Int)
 {
     abstract val partOneQuestion: String
-    abstract fun getResultOfPartOne(): Int
+    abstract fun getResultOfPartOne(): Any
 
     abstract val partTwoQuestion: String
-    abstract fun getResultOfPartTwo(): Int
+    abstract fun getResultOfPartTwo(): Any
 
     abstract val input: String
 
