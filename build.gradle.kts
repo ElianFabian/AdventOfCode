@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("plugin.serialization") version "1.7.10"
     kotlin("jvm") version "1.7.10"
 }
 
@@ -12,6 +13,8 @@ repositories {
 }
 
 dependencies {
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0-RC")
 
     // https://github.com/ronmamo/reflections
     implementation("org.reflections:reflections:0.10.2")
