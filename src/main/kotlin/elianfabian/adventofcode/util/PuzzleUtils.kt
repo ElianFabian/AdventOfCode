@@ -174,3 +174,50 @@ inline fun <T> applyTransformation(times: Int, initialValue: T, action: (value: 
     }
     return result
 }
+
+/**
+ * Returns a list with all the permutations with replacement.
+ * The first permutation will be fill with the first element of the given list.
+ */
+fun <T> Set<T>.permutationsWithReplacement(
+    maxPositions: Int = this.size,
+): List<List<T>>
+{
+    require(maxPositions > 0) { "maxPositions with value '$maxPositions' must be greater than zero." }
+
+    val setAsList = this.toList()
+    val indexByElement = setAsList.withIndex().associate { it.value to it.index }
+    val lastPermutation = List(maxPositions) { setAsList.last() }
+    val firstElement = setAsList.first()
+    val permutations = mutableListOf<List<T>>()
+
+    var currentPermutation = List(maxPositions) { setAsList.first() }
+
+    permutations += currentPermutation
+
+    do
+    {
+        for (index in currentPermutation.lastIndex downTo 0)
+        {
+            val element = currentPermutation[index]
+            val indexOfElementInSet = indexByElement[element]!!
+
+            val nextElement = setAsList[(indexOfElementInSet + 1) % setAsList.size]
+
+            val nextPermutation = currentPermutation.toMutableList().apply nextPermutation@
+            {
+                this@nextPermutation[index] = nextElement
+                currentPermutation = this@nextPermutation
+            }
+
+            if (nextElement != firstElement)
+            {
+                permutations += nextPermutation
+                break
+            }
+        }
+    }
+    while (currentPermutation != lastPermutation)
+
+    return permutations
+}
