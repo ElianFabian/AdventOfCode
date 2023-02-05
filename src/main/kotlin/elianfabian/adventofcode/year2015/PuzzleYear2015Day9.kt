@@ -1,7 +1,7 @@
 package elianfabian.adventofcode.year2015
 
 import elianfabian.adventofcode.util.AocPuzzle
-import elianfabian.adventofcode.util.permutations
+import elianfabian.adventofcode.util.permutationsWithoutReplacement
 
 object PuzzleYear2015Day9 : AocPuzzle(2015, 9)
 {
@@ -46,7 +46,7 @@ object PuzzleYear2015Day9 : AocPuzzle(2015, 9)
             return distanceByPairOfCountries["$firstCountryName-$secondCountryName"] ?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"] ?: 0
         }
 
-        val allPossibleRoutes = allCountries.permutations().ignoreReversed()
+        val allPossibleRoutes = allCountries.permutationsWithoutReplacement().ignoreReversed()
 
         val distanceByRoute = allPossibleRoutes.associateWith { route ->
             val routeDistance = route.mapIndexed { index, currentCountryName ->
@@ -90,7 +90,7 @@ object PuzzleYear2015Day9 : AocPuzzle(2015, 9)
             return distanceByPairOfCountries["$firstCountryName-$secondCountryName"] ?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"] ?: 0
         }
 
-        val allPossibleRoutes = allCountries.permutations().ignoreReversed()
+        val allPossibleRoutes = allCountries.permutationsWithoutReplacement().ignoreReversed()
 
         val distanceByRoute = allPossibleRoutes.associateWith { route ->
             val routeDistance = route.mapIndexed { index, currentCountryName ->
