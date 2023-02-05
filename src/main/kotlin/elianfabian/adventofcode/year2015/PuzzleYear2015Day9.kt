@@ -1,6 +1,7 @@
 package elianfabian.adventofcode.year2015
 
 import elianfabian.adventofcode.util.AocPuzzle
+import elianfabian.adventofcode.util.ignoreReversed
 import elianfabian.adventofcode.util.permutationsWithoutReplacement
 
 object PuzzleYear2015Day9 : AocPuzzle(2015, 9)
@@ -112,11 +113,6 @@ object PuzzleYear2015Day9 : AocPuzzle(2015, 9)
 
 
 //region Utils
-
-// This function is actually not really necessary, but it removes all the routes that are redundant.
-// As you can see in the example the are routes that are the same but in reverse, so in essence they are equal
-// and have the same total distance and this function ignores them.
-private fun <T> List<List<T>>.ignoreReversed() = distinctBy { arrayOf(it.hashCode(), it.reversed().hashCode()).sorted() }
 
 private fun fromLineToCountriesDistanceInfo(line: String): CountriesDistanceInfo
 {

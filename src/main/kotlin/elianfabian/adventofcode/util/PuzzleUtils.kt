@@ -221,3 +221,9 @@ fun <T> Set<T>.permutationsWithReplacement(
 
     return permutations
 }
+
+/**
+ * If you have a list of all permutations without replacement of a list of elements this will remove the ones
+ * that are the reverse version of other existing permutations.
+ */
+fun <T> List<List<T>>.ignoreReversed() = distinctBy { arrayOf(it.hashCode(), it.reversed().hashCode()).sorted() }
