@@ -120,7 +120,7 @@ private fun <T> List<List<T>>.ignoreReversed() = distinctBy { arrayOf(it.hashCod
 
 private fun fromLineToCountriesDistanceInfo(line: String): CountriesDistanceInfo
 {
-    val result = fromCountryToCountryDistanceRegex.matchEntire(line) ?: error("Error when trying to match this line: '$line'")
+    val result = fromCountryToCountryDistanceRegex.matchEntire(line) ?: error("Error when trying to match this line: '$line'.")
 
     return result.destructured.let { (firstCountryName, secondCountryName, distance) ->
 

@@ -128,7 +128,7 @@ private fun <T> Matrix2D<T>.setValueInSquare(
 
 private fun fromLineToInstructionInfo(line: String): InstructionInfo
 {
-    val result = instructionRegex.matchEntire(line) ?: error("Error when trying to match this line: '$line'")
+    val result = instructionRegex.matchEntire(line) ?: error("Error when trying to match this line: '$line'.")
 
     return result.destructured.let { (action, topLeftX, topLeftY, bottomRightX, bottomRightY) ->
 
@@ -157,7 +157,7 @@ private enum class Action
             "turn on"  -> TurnOn
             "turn off" -> TurnOff
             "toggle"   -> Toggle
-            else       -> error("Unexpected string action '$action'")
+            else       -> error("Unexpected string action '$action'.")
         }
     }
 }
