@@ -5,152 +5,143 @@ import elianfabian.adventofcode.util.AocPuzzle
 /**
  * --- Day 5: Doesn't He Have Intern-Elves For This? --- https://adventofcode.com/2015/day/5
  */
-object PuzzleYear2015Day5 : AocPuzzle(2015, 5)
-{
-    override val partOneQuestion = "How many strings are nice?"
+object PuzzleYear2015Day5 : AocPuzzle(2015, 5) {
 
-    /**
-     * Santa needs help figuring out which strings in his text file are naughty or nice.
-     *
-     * A nice string is one with all of the following properties:
-     *
-     * It contains at least three vowels (aeiou only), like aei, xazegov, or aeiouaeiouaeiou.
-     * It contains at least one letter that appears twice in a row, like xx, abcdde (dd), or aabbccdd (aa, bb, cc, or dd).
-     * It does not contain the strings ab, cd, pq, or xy, even if they are part of one of the other requirements.
-     * For example:
-     *
-     * - ugknbfddgicrmopn is nice because it has at least three vowels (u...i...o...), a double letter (...dd...), and none of the disallowed substrings.
-     * - aaa is nice because it has at least three vowels and a double letter, even though the letters used by different rules overlap.
-     * - jchzalrnumimnmhp is naughty because it has no double letter.
-     * - haegwjzuvuyypxyu is naughty because it contains the string xy.
-     * - dvszwmarrgswjxmb is naughty because it contains only one vowel.
-     *
-     * How many strings are nice?
-     */
-    override fun getResultOfPartOne(): Int
-    {
-        val allStrings = input.lines()
+	override val partOneQuestion = "How many strings are nice?"
 
-        return allStrings.count { isStringNiceInPartOne(it) }
-    }
+	/**
+	 * Santa needs help figuring out which strings in his text file are naughty or nice.
+	 *
+	 * A nice string is one with all of the following properties:
+	 *
+	 * It contains at least three vowels (aeiou only), like aei, xazegov, or aeiouaeiouaeiou.
+	 * It contains at least one letter that appears twice in a row, like xx, abcdde (dd), or aabbccdd (aa, bb, cc, or dd).
+	 * It does not contain the strings ab, cd, pq, or xy, even if they are part of one of the other requirements.
+	 * For example:
+	 *
+	 * - ugknbfddgicrmopn is nice because it has at least three vowels (u...i...o...), a double letter (...dd...), and none of the disallowed substrings.
+	 * - aaa is nice because it has at least three vowels and a double letter, even though the letters used by different rules overlap.
+	 * - jchzalrnumimnmhp is naughty because it has no double letter.
+	 * - haegwjzuvuyypxyu is naughty because it contains the string xy.
+	 * - dvszwmarrgswjxmb is naughty because it contains only one vowel.
+	 *
+	 * How many strings are nice?
+	 */
+	override fun getResultOfPartOne(): Int {
+		val allStrings = input.lines()
 
-    override val partTwoQuestion = "How many strings are nice under these new rules?"
+		return allStrings.count { isStringNiceInPartOne(it) }
+	}
 
-    /**
-     * Realizing the error of his ways, Santa has switched to a better model of determining whether a string is naughty or nice. None of the old rules apply, as they are all clearly ridiculous.
-     *
-     * Now, a nice string is one with all of the following properties:
-     *
-     * It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like aaa (aa, but it overlaps).
-     * It contains at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.
-     * For example:
-     *
-     * - qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
-     * - xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
-     * - uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
-     * - ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
-     *
-     * How many strings are nice under these new rules?
-     */
-    override fun getResultOfPartTwo(): Int
-    {
-        val allStrings = input.lines()
+	override val partTwoQuestion = "How many strings are nice under these new rules?"
 
-        return allStrings.count { isStringNiceInPartTwo(it) }
-    }
+	/**
+	 * Realizing the error of his ways, Santa has switched to a better model of determining whether a string is naughty or nice. None of the old rules apply, as they are all clearly ridiculous.
+	 *
+	 * Now, a nice string is one with all of the following properties:
+	 *
+	 * It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like aaa (aa, but it overlaps).
+	 * It contains at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.
+	 * For example:
+	 *
+	 * - qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
+	 * - xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
+	 * - uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
+	 * - ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
+	 *
+	 * How many strings are nice under these new rules?
+	 */
+	override fun getResultOfPartTwo(): Int {
+		val allStrings = input.lines()
 
-    override val input = getInput()
+		return allStrings.count { isStringNiceInPartTwo(it) }
+	}
+
+	override val input = getInput()
 }
 
 
 //region Utils
 
-private fun isStringNiceInPartOne(string: String): Boolean
-{
-    return hasAtLeastThreeVowels(string) && hasAtLeastOneLetterThatAppearsTwiceInARow(string) && notContainsThePairsAbCdPqXy(string)
+private fun isStringNiceInPartOne(string: String): Boolean {
+	return hasAtLeastThreeVowels(string) && hasAtLeastOneLetterThatAppearsTwiceInARow(string) && notContainsThePairsAbCdPqXy(string)
 }
 
-private fun isStringNiceInPartTwo(string: String): Boolean
-{
-    return containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string) && containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string)
+private fun isStringNiceInPartTwo(string: String): Boolean {
+	return containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string) && containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string)
 }
 
-private fun hasAtLeastThreeVowels(string: String): Boolean
-{
-    val minVowelCount = 3
-    val vowels = "aeiou"
+private fun hasAtLeastThreeVowels(string: String): Boolean {
+	val minVowelCount = 3
+	val vowels = "aeiou"
 
-    val vowelsCount = string.count { it in vowels }
+	val vowelsCount = string.count { it in vowels }
 
-    return vowelsCount >= minVowelCount
+	return vowelsCount >= minVowelCount
 }
 
-private fun hasAtLeastOneLetterThatAppearsTwiceInARow(string: String): Boolean
-{
-    string.forEachIndexed { index, currentChar ->
+private fun hasAtLeastOneLetterThatAppearsTwiceInARow(string: String): Boolean {
 
-        val nextChar = string.getOrNull(index + 1)
+	string.forEachIndexed { index, currentChar ->
 
-        if (currentChar == nextChar) return true
-    }
+		val nextChar = string.getOrNull(index + 1)
 
-    return false
+		if (currentChar == nextChar) return true
+	}
+
+	return false
 }
 
-private fun notContainsThePairsAbCdPqXy(string: String): Boolean
-{
-    val forbiddenPairs = arrayOf("ab", "cd", "pq", "xy")
+private fun notContainsThePairsAbCdPqXy(string: String): Boolean {
+	val forbiddenPairs = arrayOf("ab", "cd", "pq", "xy")
 
-    string.forEachIndexed { index, currentChar ->
+	string.forEachIndexed { index, currentChar ->
 
-        val nextChar = string.getOrNull(index + 1)
+		val nextChar = string.getOrNull(index + 1)
 
-        val currentPair = "$currentChar$nextChar"
+		val currentPair = "$currentChar$nextChar"
 
-        if (currentPair in forbiddenPairs) return false
-    }
+		if (currentPair in forbiddenPairs) return false
+	}
 
-    return true
+	return true
 }
 
-private fun containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string: String): Boolean
-{
-    val minPairCount = 2
-    val letterPairsAndCount = mutableMapOf<String, Int>()
+private fun containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string: String): Boolean {
+	val minPairCount = 2
+	val letterPairsAndCount = mutableMapOf<String, Int>()
 
-    string.forEachIndexed { index, currentChar ->
+	string.forEachIndexed { index, currentChar ->
 
-        val previousChar = string.getOrNull(index - 1)
-        val nextChar = string.getOrNull(index + 1)
+		val previousChar = string.getOrNull(index - 1)
+		val nextChar = string.getOrNull(index + 1)
 
-        val currentPair = "$currentChar$nextChar"
+		val currentPair = "$currentChar$nextChar"
 
-        if (currentPair in letterPairsAndCount)
-        {
-            val currentCount = letterPairsAndCount[currentPair]!!
-            val newCount = currentCount + if (currentChar == previousChar && currentChar == nextChar) -1 else 1
+		if (currentPair in letterPairsAndCount) {
+			val currentCount = letterPairsAndCount[currentPair]!!
+			val newCount = currentCount + if (currentChar == previousChar && currentChar == nextChar) -1 else 1
 
-            letterPairsAndCount[currentPair] = newCount
+			letterPairsAndCount[currentPair] = newCount
 
-            if (newCount >= minPairCount) return true
-        }
-        else letterPairsAndCount[currentPair] = 1
-    }
+			if (newCount >= minPairCount) return true
+		}
+		else letterPairsAndCount[currentPair] = 1
+	}
 
-    return false
+	return false
 }
 
-private fun containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string: String): Boolean
-{
-    string.forEachIndexed { index, currentChar ->
+private fun containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string: String): Boolean {
+	string.forEachIndexed { index, currentChar ->
 
-        val previousChar = string.getOrNull(index - 1)
-        val nextChar = string.getOrNull(index + 1)
+		val previousChar = string.getOrNull(index - 1)
+		val nextChar = string.getOrNull(index + 1)
 
-        if ((previousChar == nextChar) && (currentChar != previousChar)) return true
-    }
+		if ((previousChar == nextChar) && (currentChar != previousChar)) return true
+	}
 
-    return false
+	return false
 }
 
 //endregion

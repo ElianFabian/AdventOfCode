@@ -6,72 +6,67 @@ import kotlinx.serialization.json.*
 /**
  * --- Day 12: JSAbacusFramework.io --- https://adventofcode.com/2015/day/12
  */
-object PuzzleYear2015Day12 : AocPuzzle(2015, 12)
-{
-    override val partOneQuestion = "What is the sum of all numbers in the document?"
+object PuzzleYear2015Day12 : AocPuzzle(2015, 12) {
 
-    /**
-     * Santa's Accounting-Elves need help balancing the books after a recent order. Unfortunately, their accounting software uses a peculiar storage format. That's where you come in.
-     *
-     * They have a JSON document which contains a variety of things: arrays ([1,2,3]), objects ({"a":1, "b":2}), numbers, and strings. Your first job is to simply find all of the numbers throughout the document and add them together.
-     *
-     * For example:
-     *
-     * - [1,2,3] and {"a":2,"b":4} both have a sum of 6.
-     * - [[[3]]] and {"a":{"b":4},"c":-1} both have a sum of 3.
-     * - {"a":[-1,1]} and [-1,{"a":1}] both have a sum of 0.
-     * - [] and {} both have a sum of 0.
-     * - You will not encounter any strings containing numbers.
-     *
-     * What is the sum of all numbers in the document?
-     */
-    override fun getResultOfPartOne(): Int
-    {
-        val allNumbers = numberRegex.findAll(input).map { it.value.toInt() }
+	override val partOneQuestion = "What is the sum of all numbers in the document?"
 
-        return allNumbers.sum()
-    }
+	/**
+	 * Santa's Accounting-Elves need help balancing the books after a recent order. Unfortunately, their accounting software uses a peculiar storage format. That's where you come in.
+	 *
+	 * They have a JSON document which contains a variety of things: arrays ([1,2,3]), objects ({"a":1, "b":2}), numbers, and strings. Your first job is to simply find all of the numbers throughout the document and add them together.
+	 *
+	 * For example:
+	 *
+	 * - [1,2,3] and {"a":2,"b":4} both have a sum of 6.
+	 * - [[[3]]] and {"a":{"b":4},"c":-1} both have a sum of 3.
+	 * - {"a":[-1,1]} and [-1,{"a":1}] both have a sum of 0.
+	 * - [] and {} both have a sum of 0.
+	 * - You will not encounter any strings containing numbers.
+	 *
+	 * What is the sum of all numbers in the document?
+	 */
+	override fun getResultOfPartOne(): Int {
+		val allNumbers = numberRegex.findAll(input).map { it.value.toInt() }
 
-    override val partTwoQuestion = "What is the sum of all numbers with the new conditions?"
+		return allNumbers.sum()
+	}
 
-    /**
-     * Uh oh - the Accounting-Elves have realized that they double-counted everything red.
-     *
-     * Ignore any object (and all of its children) which has any property with the value "red". Do this only for objects ({...}), not arrays ([...]).
-     *
-     * - [1,2,3] still has a sum of 6.
-     * - [1,{"c":"red","b":2},3] now has a sum of 4, because the middle object is ignored.
-     * - {"d":"red","e":[1,2,3,4],"f":5} now has a sum of 0, because the entire structure is ignored.
-     * - [1,"red",5] has a sum of 6, because "red" in an array has no effect.
-     */
-    override fun getResultOfPartTwo(): Float
-    {
-        val jsonElement = Json.parseToJsonElement(input)
+	override val partTwoQuestion = "What is the sum of all numbers with the new conditions?"
 
-        return jsonElement.getSumOfAllNumbersWithCondition()
-    }
+	/**
+	 * Uh oh - the Accounting-Elves have realized that they double-counted everything red.
+	 *
+	 * Ignore any object (and all of its children) which has any property with the value "red". Do this only for objects ({...}), not arrays ([...]).
+	 *
+	 * - [1,2,3] still has a sum of 6.
+	 * - [1,{"c":"red","b":2},3] now has a sum of 4, because the middle object is ignored.
+	 * - {"d":"red","e":[1,2,3,4],"f":5} now has a sum of 0, because the entire structure is ignored.
+	 * - [1,"red",5] has a sum of 6, because "red" in an array has no effect.
+	 */
+	override fun getResultOfPartTwo(): Float {
+		val jsonElement = Json.parseToJsonElement(input)
 
-    override val input = getInput()
+		return jsonElement.getSumOfAllNumbersWithCondition()
+	}
+
+	override val input = getInput()
 }
 
 //region Utils
 
 private val numberRegex = "-?\\d+\\.?".toRegex(RegexOption.DOT_MATCHES_ALL)
 
-private fun JsonElement.getSumOfAllNumbersWithCondition(): Float
-{
-    return when (this)
-    {
-        is JsonArray     -> this.map { it.getSumOfAllNumbersWithCondition() }.sum()
-        is JsonObject    ->
-        {
-            val isNotValidForSum = this.values.any { it.jsonPrimitiveOrNull.toString() == "\"red\"" }
-            if (isNotValidForSum) return 0F
+private fun JsonElement.getSumOfAllNumbersWithCondition(): Float {
+	return when (this) {
+		is JsonArray     -> this.map { it.getSumOfAllNumbersWithCondition() }.sum()
+		is JsonObject    -> {
+			val isNotValidForSum = this.values.any { it.jsonPrimitiveOrNull.toString() == "\"red\"" }
+			if (isNotValidForSum) return 0F
 
-            this.values.map { it.getSumOfAllNumbersWithCondition() }.sum()
-        }
-        is JsonPrimitive -> floatOrNull ?: 0F
-    }
+			this.values.map { it.getSumOfAllNumbersWithCondition() }.sum()
+		}
+		is JsonPrimitive -> floatOrNull ?: 0F
+	}
 }
 
 private val JsonElement.jsonPrimitiveOrNull get() = runCatching { jsonPrimitive }.getOrNull()

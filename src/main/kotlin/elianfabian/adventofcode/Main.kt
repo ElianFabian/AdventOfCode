@@ -1,10 +1,7 @@
 package elianfabian.adventofcode
 
 
-import elianfabian.adventofcode.util.AocPuzzle
-import elianfabian.adventofcode.util.getAllAocPuzzlesGroupByYearAndDay
-import elianfabian.adventofcode.util.showLastPuzzle
-import elianfabian.adventofcode.util.showPuzzleResults
+import elianfabian.adventofcode.util.*
 
 /**
  * Hi there, I'm Elián and in this project it's where I complete the Advent of Code puzzles in Kotlin.
@@ -14,9 +11,8 @@ import elianfabian.adventofcode.util.showPuzzleResults
  *
  * In case you found this repository I hope my solutions can be interesting or helpful for you.
  */
-fun main()
-{
-    showLastPuzzle()
-    //showPuzzleFromYearAndDay(year = 2015, day = 5)
-    //showAllPuzzlesOfAllTheYears()
+fun main() {
+	showLastPuzzle()
+	//showPuzzleFromYearAndDay(year = 2015, day = 13)
+	//showAllPuzzlesOfAllTheYears()
 }

@@ -7,266 +7,248 @@ import kotlin.reflect.KFunction2
 /**
  * --- Day 7: Some Assembly Required --- https://adventofcode.com/2015/day/7
  */
-object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7)
-{
-    override val partOneQuestion = "In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?"
+object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 
-    /**
-     * This year, Santa brought little Bobby Tables a set of wires and bitwise logic gates! Unfortunately, little Bobby is a little under the recommended age range, and he needs help assembling the circuit.
-     *
-     * Each wire has an identifier (some lowercase letters) and can carry a 16-bit signal (a number from 0 to 65535). A signal is provided to each wire by a gate, another wire, or some specific value. Each wire can only get a signal from one source, but can provide its signal to multiple destinations. A gate provides no signal until all of its inputs have a signal.
-     *
-     * The included instructions booklet describes how to connect the parts together: x AND y -> z means to connect wires x and y to an AND gate, and then connect its output to wire z.
-     *
-     * For example:
-     *
-     * - 123 -> x means that the signal 123 is provided to wire x.
-     * - x AND y -> z means that the bitwise AND of wire x and wire y is provided to wire z.
-     * - p LSHIFT 2 -> q means that the value from wire p is left-shifted by 2 and then provided to wire q.
-     * - NOT e -> f means that the bitwise complement of the value from wire e is provided to wire f.
-     *
-     * Other possible gates include OR (bitwise OR) and RSHIFT (right-shift). If, for some reason, you'd like to emulate the circuit instead, almost all programming languages (for example, C, JavaScript, or Python) provide operators for these gates.
-     *
-     * For example, here is a simple circuit:
-     *
-     * - 123 -> x
-     * - 456 -> y
-     * - x AND y -> d
-     * - x OR y -> e
-     * - x LSHIFT 2 -> f
-     * - y RSHIFT 2 -> g
-     * - NOT x -> h
-     * - NOT y -> i
-     *
-     * - After it is run, these are the signals on the wires:
-     *
-     * - d: 72
-     * - e: 507
-     * - f: 492
-     * - g: 114
-     * - h: 65412
-     * - i: 65079
-     * - x: 123
-     * - y: 456
-     *
-     * In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?
-     */
-    override fun getResultOfPartOne(): Int
-    {
-        val wires = mutableMapOf<String, GateInput.Wire>()
+	override val partOneQuestion = "In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?"
 
-        fromAllLinesToLogicGateExpressions(input.lines()).forEach { expression ->
+	/**
+	 * This year, Santa brought little Bobby Tables a set of wires and bitwise logic gates! Unfortunately, little Bobby is a little under the recommended age range, and he needs help assembling the circuit.
+	 *
+	 * Each wire has an identifier (some lowercase letters) and can carry a 16-bit signal (a number from 0 to 65535). A signal is provided to each wire by a gate, another wire, or some specific value. Each wire can only get a signal from one source, but can provide its signal to multiple destinations. A gate provides no signal until all of its inputs have a signal.
+	 *
+	 * The included instructions booklet describes how to connect the parts together: x AND y -> z means to connect wires x and y to an AND gate, and then connect its output to wire z.
+	 *
+	 * For example:
+	 *
+	 * - 123 -> x means that the signal 123 is provided to wire x.
+	 * - x AND y -> z means that the bitwise AND of wire x and wire y is provided to wire z.
+	 * - p LSHIFT 2 -> q means that the value from wire p is left-shifted by 2 and then provided to wire q.
+	 * - NOT e -> f means that the bitwise complement of the value from wire e is provided to wire f.
+	 *
+	 * Other possible gates include OR (bitwise OR) and RSHIFT (right-shift). If, for some reason, you'd like to emulate the circuit instead, almost all programming languages (for example, C, JavaScript, or Python) provide operators for these gates.
+	 *
+	 * For example, here is a simple circuit:
+	 *
+	 * - 123 -> x
+	 * - 456 -> y
+	 * - x AND y -> d
+	 * - x OR y -> e
+	 * - x LSHIFT 2 -> f
+	 * - y RSHIFT 2 -> g
+	 * - NOT x -> h
+	 * - NOT y -> i
+	 *
+	 * - After it is run, these are the signals on the wires:
+	 *
+	 * - d: 72
+	 * - e: 507
+	 * - f: 492
+	 * - g: 114
+	 * - h: 65412
+	 * - i: 65079
+	 * - x: 123
+	 * - y: 456
+	 *
+	 * In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?
+	 */
+	override fun getResultOfPartOne(): Int {
+		val wires = mutableMapOf<String, GateInput.Wire>()
 
-            when (expression)
-            {
-                is LogicGateExpression.Value  -> expression.apply()
-                {
-                    wireReceiver.assignSignal(
-                        input = wires.getGateInputOrPutWire(gateInput),
-                        signal = { inputs -> inputs[0].asSignal() },
-                    )
+		fromAllLinesToLogicGateExpressions(input.lines()).forEach { expression ->
 
-                    wires.putIfAbsent(wireReceiver.name, wireReceiver)
-                }
-                is LogicGateExpression.Unary  -> expression.apply()
-                {
-                    wireReceiver.assignSignal(
-                        input = wires.getGateInputOrPutWire(gateInput),
-                        signal = { inputs -> inputs[0].toUShortOrNull()?.let { operator(it) }?.asSignal() },
-                    )
+			when (expression) {
+				is LogicGateExpression.Value  -> expression.apply {
+					wireReceiver.assignSignal(
+						input = wires.getGateInputOrPutWire(gateInput),
+						signal = { inputs -> inputs[0].asSignal() },
+					)
 
-                    wires.putIfAbsent(wireReceiver.name, wireReceiver)
-                }
-                is LogicGateExpression.Binary -> expression.apply()
-                {
-                    wireReceiver.assignSignal(
-                        firstInput = wires.getGateInputOrPutWire(firstGateInput),
-                        secondInput = wires.getGateInputOrPutWire(secondGateInput),
-                        signal = { inputs ->
-                            
-                            println("receiver: ${wireReceiver.name} operator: ${operator.name}")
+					wires.putIfAbsent(wireReceiver.name, wireReceiver)
+				}
+				is LogicGateExpression.Unary  -> expression.apply {
+					wireReceiver.assignSignal(
+						input = wires.getGateInputOrPutWire(gateInput),
+						signal = { inputs -> inputs[0].toUShortOrNull()?.let { operator(it) }?.asSignal() },
+					)
 
-                            val (firstInputValue, secondInputValue) = inputs.map { it.toUShortOrNull() }
+					wires.putIfAbsent(wireReceiver.name, wireReceiver)
+				}
+				is LogicGateExpression.Binary -> expression.apply {
+					wireReceiver.assignSignal(
+						firstInput = wires.getGateInputOrPutWire(firstGateInput),
+						secondInput = wires.getGateInputOrPutWire(secondGateInput),
+						signal = { inputs ->
 
-                            if (firstInputValue != null && secondInputValue != null)
-                            {
-                                return@assignSignal operator(firstInputValue, secondInputValue).asSignal()
-                            }
-                            return@assignSignal null
-                        },
-                    )
+							println("receiver: ${wireReceiver.name} operator: ${operator.name}")
 
-                    if (firstGateInput is GateInput.Wire) wires.putIfAbsent(firstGateInput.name, firstGateInput)
-                    if (secondGateInput is GateInput.Wire) wires.putIfAbsent(secondGateInput.name, secondGateInput)
+							val (firstInputValue, secondInputValue) = inputs.map { it.toUShortOrNull() }
 
-                    wires.putIfAbsent(wireReceiver.name, wireReceiver)
-                }
-            }
-        }
-        
-        println("1--------------------------------------------")
+							if (firstInputValue != null && secondInputValue != null) {
+								return@assignSignal operator(firstInputValue, secondInputValue).asSignal()
+							}
+							return@assignSignal null
+						},
+					)
 
-        val a = wires["a"]
-        //println(wires)
-        println("2--------------------------------------------")
-        
-        println(wires)
+					if (firstGateInput is GateInput.Wire) wires.putIfAbsent(firstGateInput.name, firstGateInput)
+					if (secondGateInput is GateInput.Wire) wires.putIfAbsent(secondGateInput.name, secondGateInput)
 
-        return -1
-    }
+					wires.putIfAbsent(wireReceiver.name, wireReceiver)
+				}
+			}
+		}
 
-    override val partTwoQuestion = "-"
+		println("1--------------------------------------------")
 
-    override fun getResultOfPartTwo(): Int
-    {
-        return -1
-    }
+		val a = wires["a"]
+		//println(wires)
+		println("2--------------------------------------------")
 
-    override val input = getFakeInput()
+		println(wires)
+
+		return -1
+	}
+
+	override val partTwoQuestion = "-"
+
+	override fun getResultOfPartTwo(): Int {
+		return -1
+	}
+
+	override val input = getFakeInput()
 }
 
 
 //region Utils
 
 
-private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicGateExpression>
-{
-    val wires = mutableMapOf<String, GateInput.Wire>()
+private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicGateExpression> {
+	val wires = mutableMapOf<String, GateInput.Wire>()
 
-    val listOfExpression = lines.map { line ->
-        line.whenMatchDestructured(
-            Matching(singleValueAssignmentExpression) { (input, wireReceiverName) ->
+	val listOfExpression = lines.map { line ->
+		line.whenMatchDestructured(
+			Matching(singleValueAssignmentExpression) { (input, wireReceiverName) ->
 
-                // Actually in the input provided there's not instruction assignment from wire to wire,
-                // but I want to implement that possibility even though
-                val gateInput = when (val gateInput = input.asGateInput())
-                {
-                    is GateInput.Signal -> gateInput
-                    is GateInput.Wire   -> wires.getOrPut(gateInput.name) { gateInput }
-                }
-                val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
+				// Actually in the input provided there's not instruction assignment from wire to wire,
+				// but I want to implement that possibility even though
+				val gateInput = when (val gateInput = input.asGateInput()) {
+					is GateInput.Signal -> gateInput
+					is GateInput.Wire   -> wires.getOrPut(gateInput.name) { gateInput }
+				}
+				val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
 
-                LogicGateExpression.Value(
-                    gateInput = gateInput,
-                    wireReceiver = wireReceiver,
-                )
-            },
-            Matching(unaryExpressionAssignmentRegex) { (operator, input, wireReceiverName) ->
+				LogicGateExpression.Value(
+					gateInput = gateInput,
+					wireReceiver = wireReceiver,
+				)
+			},
+			Matching(unaryExpressionAssignmentRegex) { (operator, input, wireReceiverName) ->
 
-                val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
+				val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
 
-                val gateInput = wires.getGateInputOrPutWire(input.asGateInput())
+				val gateInput = wires.getGateInputOrPutWire(input.asGateInput())
 
-                LogicGateExpression.Unary(
-                    operator = stringToUnaryOperator[operator]!!,
-                    gateInput = gateInput,
-                    wireReceiver = wireReceiver,
-                )
-            },
-            Matching(binaryExpressionAssignmentRegex) { (firstInput, operator, secondInput, wireReceiverName) ->
+				LogicGateExpression.Unary(
+					operator = stringToUnaryOperator[operator]!!,
+					gateInput = gateInput,
+					wireReceiver = wireReceiver,
+				)
+			},
+			Matching(binaryExpressionAssignmentRegex) { (firstInput, operator, secondInput, wireReceiverName) ->
 
-                val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
+				val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
 
-                val firstGateInput = wires.getGateInputOrPutWire(firstInput.asGateInput())
-                val secondGateInput = wires.getGateInputOrPutWire(secondInput.asGateInput())
+				val firstGateInput = wires.getGateInputOrPutWire(firstInput.asGateInput())
+				val secondGateInput = wires.getGateInputOrPutWire(secondInput.asGateInput())
 
-                LogicGateExpression.Binary(
-                    operator = stringToBinaryOperator[operator]!!,
-                    firstGateInput = firstGateInput,
-                    secondGateInput = secondGateInput,
-                    wireReceiver = wireReceiver,
-                )
-            },
-        ) ?: error("There was no match for this line: '$line'.")
-    }
+				LogicGateExpression.Binary(
+					operator = stringToBinaryOperator[operator]!!,
+					firstGateInput = firstGateInput,
+					secondGateInput = secondGateInput,
+					wireReceiver = wireReceiver,
+				)
+			},
+		) ?: error("There was no match for this line: '$line'.")
+	}
 
-    return listOfExpression
+	return listOfExpression
 }
 
-private sealed interface LogicGateExpression
-{
-    data class Value(
-        val gateInput: GateInput,
-        val wireReceiver: GateInput.Wire,
-    ) : LogicGateExpression
+private sealed interface LogicGateExpression {
+	data class Value(
+		val gateInput: GateInput,
+		val wireReceiver: GateInput.Wire,
+	) : LogicGateExpression
 
-    data class Unary(
-        val gateInput: GateInput,
-        val operator: KFunction1<UShort, UShort>,
-        val wireReceiver: GateInput.Wire,
-    ) : LogicGateExpression
+	data class Unary(
+		val gateInput: GateInput,
+		val operator: KFunction1<UShort, UShort>,
+		val wireReceiver: GateInput.Wire,
+	) : LogicGateExpression
 
-    data class Binary(
-        val firstGateInput: GateInput,
-        val secondGateInput: GateInput,
-        val operator: KFunction2<UShort, UShort, UShort>,
-        val wireReceiver: GateInput.Wire,
-    ) : LogicGateExpression
+	data class Binary(
+		val firstGateInput: GateInput,
+		val secondGateInput: GateInput,
+		val operator: KFunction2<UShort, UShort, UShort>,
+		val wireReceiver: GateInput.Wire,
+	) : LogicGateExpression
 }
 
-private sealed interface GateInput
-{
-    @JvmInline
-    value class Signal(val value: UShort) : GateInput
+private sealed interface GateInput {
+	@JvmInline
+	value class Signal(val value: UShort) : GateInput
 
-    data class Wire(val name: String) : GateInput
-    {
-        private var _signalComputation: ((inputs: List<GateInput>) -> Signal?)? = null
-        val signal: Signal? get() = _signalComputation?.invoke(_inputs)
+	data class Wire(val name: String) : GateInput {
+		private var _signalComputation: ((inputs: List<GateInput>) -> Signal?)? = null
+		val signal: Signal? get() = _signalComputation?.invoke(_inputs)
 
-        private var _inputs = emptyList<GateInput>()
+		private var _inputs = emptyList<GateInput>()
 
-        fun assignSignal(
-            firstInput: GateInput,
-            secondInput: GateInput,
-            signal: (inputs: List<GateInput>) -> Signal?,
-        )
-        {
-            if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
+		fun assignSignal(
+			firstInput: GateInput,
+			secondInput: GateInput,
+			signal: (inputs: List<GateInput>) -> Signal?,
+		) {
+			if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
 
-            _inputs = listOf(firstInput, secondInput)
-            _signalComputation = signal
-        }
+			_inputs = listOf(firstInput, secondInput)
+			_signalComputation = signal
+		}
 
-        fun assignSignal(
-            input: GateInput,
-            signal: (inputs: List<GateInput>) -> Signal?,
-        )
-        {
-            if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
+		fun assignSignal(
+			input: GateInput,
+			signal: (inputs: List<GateInput>) -> Signal?,
+		) {
+			if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
 
-            _inputs = listOf(input)
-            _signalComputation = signal
-        }
+			_inputs = listOf(input)
+			_signalComputation = signal
+		}
 
-        override fun toString(): String = "Wire(name=$name, signal=${signal?.value})"
-    }
+		override fun toString(): String = "Wire(name=$name, signal=${signal?.value})"
+	}
 }
 
-private fun GateInput.toUShortOrNull(): UShort? = when (this)
-{
-    is GateInput.Signal -> this.value
-    is GateInput.Wire   -> this.signal?.value
+private fun GateInput.toUShortOrNull(): UShort? = when (this) {
+	is GateInput.Signal -> this.value
+	is GateInput.Wire   -> this.signal?.value
 }
 
-private fun String.asGateInput() = when
-{
-    this.all { it.isDigit() }  -> this.toUShort().asSignal()
-    this.all { it.isLetter() } -> GateInput.Wire(name = this)
-    else                       -> error("Can't convert string '$this' into GateInput.")
+private fun String.asGateInput() = when {
+	this.all { it.isDigit() }  -> this.toUShort().asSignal()
+	this.all { it.isLetter() } -> GateInput.Wire(name = this)
+	else                       -> error("Can't convert string '$this' into GateInput.")
 }
 
 private fun UShort.asSignal() = GateInput.Signal(this)
-private fun GateInput.asSignal(): GateInput.Signal? = when (this)
-{
-    is GateInput.Signal -> this
-    is GateInput.Wire   -> this.signal
+private fun GateInput.asSignal(): GateInput.Signal? = when (this) {
+	is GateInput.Signal -> this
+	is GateInput.Wire   -> this.signal
 }
 
-private fun MutableMap<String, GateInput.Wire>.getGateInputOrPutWire(gateInput: GateInput) = when (gateInput)
-{
-    is GateInput.Signal -> gateInput
-    is GateInput.Wire   -> this.getOrPut(gateInput.name) { gateInput }
+private fun MutableMap<String, GateInput.Wire>.getGateInputOrPutWire(gateInput: GateInput) = when (gateInput) {
+	is GateInput.Signal -> gateInput
+	is GateInput.Wire   -> this.getOrPut(gateInput.name) { gateInput }
 }
 
 private val singleValueAssignmentExpression = "(\\w+) -> (\\w+)".toRegex()
@@ -274,14 +256,14 @@ private val unaryExpressionAssignmentRegex = "(\\w+) (\\w+) -> (\\w+)".toRegex()
 private val binaryExpressionAssignmentRegex = "(\\w+) (\\w+) (\\w+) -> (\\w+)".toRegex()
 
 private val stringToUnaryOperator = mapOf(
-    "NOT" to UShort::inv,
+	"NOT" to UShort::inv,
 )
 
 private val stringToBinaryOperator = mapOf(
-    "AND" to UShort::and,
-    "OR" to UShort::or,
-    "LSHIFT" to UShort::shl,
-    "RSHIFT" to UShort::shr,
+	"AND" to UShort::and,
+	"OR" to UShort::or,
+	"LSHIFT" to UShort::shl,
+	"RSHIFT" to UShort::shr,
 )
 
 //endregion
