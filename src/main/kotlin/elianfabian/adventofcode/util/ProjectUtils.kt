@@ -55,13 +55,11 @@ fun showLastPuzzle() {
 fun showPuzzleFromYearAndDay(
 	year: Int,
 	day: Int,
-) = runCatching()
-{
+) = runCatching {
 	val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
 
 	showPuzzleResults(aocPuzzles[year]!![day]!!)
-}.onFailure()
-{
+}.onFailure {
 	println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
 }
 
