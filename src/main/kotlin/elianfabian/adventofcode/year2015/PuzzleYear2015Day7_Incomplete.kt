@@ -54,10 +54,10 @@ object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 	override fun getResultOfPartOne(): Int {
 		val wires = mutableMapOf<String, GateInput.Wire>()
 
-		fromAllLinesToLogicGateExpressions(input.lines()).forEach { expression ->
+		fromAllLinesToLogicGateExpressions(input.lineSequence()).forEach { expression ->
 
 			when (expression) {
-				is LogicGateExpression.Value  -> expression.apply {
+				is LogicGateExpression.Value -> expression.apply {
 					wireReceiver.assignSignal(
 						input = wires.getGateInputOrPutWire(gateInput),
 						signal = { inputs -> inputs[0].asSignal() },
@@ -65,7 +65,8 @@ object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 
 					wires.putIfAbsent(wireReceiver.name, wireReceiver)
 				}
-				is LogicGateExpression.Unary  -> expression.apply {
+
+				is LogicGateExpression.Unary -> expression.apply {
 					wireReceiver.assignSignal(
 						input = wires.getGateInputOrPutWire(gateInput),
 						signal = { inputs -> inputs[0].toUShortOrNull()?.let { operator(it) }?.asSignal() },
@@ -73,6 +74,7 @@ object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 
 					wires.putIfAbsent(wireReceiver.name, wireReceiver)
 				}
+
 				is LogicGateExpression.Binary -> expression.apply {
 					wireReceiver.assignSignal(
 						firstInput = wires.getGateInputOrPutWire(firstGateInput),
@@ -90,8 +92,12 @@ object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 						},
 					)
 
-					if (firstGateInput is GateInput.Wire) wires.putIfAbsent(firstGateInput.name, firstGateInput)
-					if (secondGateInput is GateInput.Wire) wires.putIfAbsent(secondGateInput.name, secondGateInput)
+					if (firstGateInput is GateInput.Wire) {
+						wires.putIfAbsent(firstGateInput.name, firstGateInput)
+					}
+					if (secondGateInput is GateInput.Wire) {
+						wires.putIfAbsent(secondGateInput.name, secondGateInput)
+					}
 
 					wires.putIfAbsent(wireReceiver.name, wireReceiver)
 				}
@@ -122,7 +128,7 @@ object PuzzleYear2015Day7_Incomplete : AocPuzzle(2015, 7) {
 //region Utils
 
 
-private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicGateExpression> {
+private fun fromAllLinesToLogicGateExpressions(lines: Sequence<String>): List<LogicGateExpression> {
 	val wires = mutableMapOf<String, GateInput.Wire>()
 
 	val listOfExpression = lines.map { line ->
@@ -133,7 +139,7 @@ private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicG
 				// but I want to implement that possibility even though
 				val gateInput = when (val gateInput = input.asGateInput()) {
 					is GateInput.Signal -> gateInput
-					is GateInput.Wire   -> wires.getOrPut(gateInput.name) { gateInput }
+					is GateInput.Wire -> wires.getOrPut(gateInput.name) { gateInput }
 				}
 				val wireReceiver = wires.getOrPut(wireReceiverName) { GateInput.Wire(wireReceiverName) }
 
@@ -169,7 +175,7 @@ private fun fromAllLinesToLogicGateExpressions(lines: List<String>): List<LogicG
 				)
 			},
 		) ?: error("There was no match for this line: '$line'.")
-	}
+	}.toList()
 
 	return listOfExpression
 }
@@ -209,7 +215,9 @@ private sealed interface GateInput {
 			secondInput: GateInput,
 			signal: (inputs: List<GateInput>) -> Signal?,
 		) {
-			if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
+			if (_signalComputation != null) {
+				error("Attempt to reassign the signal more than once in wire '$name'.")
+			}
 
 			_inputs = listOf(firstInput, secondInput)
 			_signalComputation = signal
@@ -219,7 +227,9 @@ private sealed interface GateInput {
 			input: GateInput,
 			signal: (inputs: List<GateInput>) -> Signal?,
 		) {
-			if (_signalComputation != null) error("Attempt to reassign the signal more than once in wire '$name'.")
+			if (_signalComputation != null) {
+				error("Attempt to reassign the signal more than once in wire '$name'.")
+			}
 
 			_inputs = listOf(input)
 			_signalComputation = signal
@@ -230,25 +240,25 @@ private sealed interface GateInput {
 }
 
 private fun GateInput.toUShortOrNull(): UShort? = when (this) {
-	is GateInput.Signal -> this.value
-	is GateInput.Wire   -> this.signal?.value
+	is GateInput.Signal -> value
+	is GateInput.Wire -> signal?.value
 }
 
 private fun String.asGateInput() = when {
-	this.all { it.isDigit() }  -> this.toUShort().asSignal()
+	this.all { it.isDigit() } -> this.toUShort().asSignal()
 	this.all { it.isLetter() } -> GateInput.Wire(name = this)
-	else                       -> error("Can't convert string '$this' into GateInput.")
+	else -> error("Can't convert string '$this' into GateInput.")
 }
 
 private fun UShort.asSignal() = GateInput.Signal(this)
 private fun GateInput.asSignal(): GateInput.Signal? = when (this) {
 	is GateInput.Signal -> this
-	is GateInput.Wire   -> this.signal
+	is GateInput.Wire -> signal
 }
 
 private fun MutableMap<String, GateInput.Wire>.getGateInputOrPutWire(gateInput: GateInput) = when (gateInput) {
 	is GateInput.Signal -> gateInput
-	is GateInput.Wire   -> this.getOrPut(gateInput.name) { gateInput }
+	is GateInput.Wire -> this.getOrPut(gateInput.name) { gateInput }
 }
 
 private val singleValueAssignmentExpression = "(\\w+) -> (\\w+)".toRegex()

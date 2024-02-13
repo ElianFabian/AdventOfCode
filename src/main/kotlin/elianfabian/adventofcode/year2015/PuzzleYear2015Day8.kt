@@ -34,7 +34,7 @@ object PuzzleYear2015Day8 : AocPuzzle(2015, 8) {
 	 * - For example, given the four strings above, the total number of characters of string code (2 + 5 + 10 + 6 = 23) minus the total number of characters in memory for string values (0 + 3 + 7 + 1 = 11) is 23 - 11 = 12.
 	 */
 	override fun getResultOfPartOne(): Int {
-		val listOfStringInfo = input.lines().map { rawString ->
+		val listOfStringInfo = input.lineSequence().map { rawString ->
 			StringData(
 				rawString = rawString,
 				transformedString = rawStringToString(rawString),
@@ -69,8 +69,7 @@ object PuzzleYear2015Day8 : AocPuzzle(2015, 8) {
 	 * Your task is to find the total number of characters to represent the newly encoded strings minus the number of characters of code in each original string literal. For example, for the strings above, the total encoded length (6 + 9 + 16 + 11 = 42) minus the characters in the original code representation (23, just like in the first part of this puzzle) is 42 - 23 = 19.
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val listOfStringInfo = input.lines().map { rawString ->
-
+		val listOfStringInfo = input.lineSequence().map { rawString ->
 			StringData(
 				rawString = rawString,
 				transformedString = rawStringToEncodedString(rawString),

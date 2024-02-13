@@ -46,9 +46,10 @@ object PuzzleYear2015Day13 : AocPuzzle(2015, 13) {
 	 * What is the total change in happiness for the optimal seating arrangement of the actual guest list?
 	 */
 	override fun getResultOfPartOne(): Int {
-		val listOfGuestInfo = input.lines().map { line ->
-			fromLineToHappinessInfo(line)
-		}
+		val listOfGuestInfo = input
+			.lineSequence()
+			.map { line -> fromLineToHappinessInfo(line) }
+			.toList()
 
 		val allGuestNames = listOfGuestInfo.map { info ->
 			info.selfName
@@ -58,9 +59,9 @@ object PuzzleYear2015Day13 : AocPuzzle(2015, 13) {
 
 		val allPossibleGuestArrangements = allGuestNames.permutationsWithoutReplacement().ignoreReversed()
 
-		val maxHappinessUnitVariation = allPossibleGuestArrangements.maxOfOrNull {
+		val maxHappinessUnitVariation = allPossibleGuestArrangements.maxOfOrNull { arrangement ->
 			getTotalHappinessUnitsFromArrangement(
-				arrangement = it,
+				arrangement = arrangement,
 				happinessUnitsVariationByGuestByGuest = happinessUnitsVariationByGuestByGuest,
 			)
 		} ?: 0
@@ -78,7 +79,10 @@ object PuzzleYear2015Day13 : AocPuzzle(2015, 13) {
 	 * What is the total change in happiness for the optimal seating arrangement that actually includes yourself?
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val listOfGuestInfo = input.lines().map { fromLineToHappinessInfo(it) }
+		val listOfGuestInfo = input
+			.lineSequence()
+			.map { line -> fromLineToHappinessInfo(line) }
+			.toList()
 
 		val allGuestNames = listOfGuestInfo.map { it.selfName }.distinct() + "Me"
 
@@ -86,9 +90,9 @@ object PuzzleYear2015Day13 : AocPuzzle(2015, 13) {
 
 		val allPossibleGuestArrangements = allGuestNames.permutationsWithoutReplacement()
 
-		val maxHappinessUnitVariation = allPossibleGuestArrangements.maxOfOrNull { arrangemnt ->
+		val maxHappinessUnitVariation = allPossibleGuestArrangements.maxOfOrNull { arrangement ->
 			getTotalHappinessUnitsFromArrangement(
-				arrangement = arrangemnt,
+				arrangement = arrangement,
 				happinessUnitsVariationByGuestByGuest = happinessUnitsVariationByGuestByGuest,
 			)
 		} ?: 0
@@ -145,7 +149,7 @@ private fun fromLineToHappinessInfo(line: String): GuestInfo {
 		val unitsSign = when (verb) {
 			"gain" -> 1
 			"lose" -> -1
-			else   -> error("Unexpected verb '$verb' when matching line '$line'.")
+			else -> error("Unexpected verb '$verb' when matching line '$line'.")
 		}
 
 		GuestInfo(

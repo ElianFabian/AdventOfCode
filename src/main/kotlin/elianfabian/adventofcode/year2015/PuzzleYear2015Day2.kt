@@ -22,7 +22,7 @@ object PuzzleYear2015Day2 : AocPuzzle(2015, 2) {
 	 * All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 	 */
 	override fun getResultOfPartOne(): Int {
-		val allGiftDimensions = input.lines().map { fromLineToDimensions(it) }
+		val allGiftDimensions = input.lineSequence().map { fromLineToDimensions(it) }
 
 		val paperAreaNeeded = allGiftDimensions.sumOf { dimension ->
 			val giftSurfaceArea = dimension.getSurfaceArea()
@@ -49,9 +49,9 @@ object PuzzleYear2015Day2 : AocPuzzle(2015, 2) {
 	 * How many total feet of ribbon should they order?
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val allGiftDimensions = input.lines().map { fromLineToDimensions(it) }
+		val allGiftDimensions = input.lineSequence().map { fromLineToDimensions(it) }
 
-		val ribbonLengthNeeded = allGiftDimensions.sumOf() { dimension ->
+		val ribbonLengthNeeded = allGiftDimensions.sumOf { dimension ->
 			val pairOfSmallestSides = dimension.getPairOfSmallestSides()
 
 			val ribbonLengthForTheSmallestPerimeter = 2 * pairOfSmallestSides.run { first + second }

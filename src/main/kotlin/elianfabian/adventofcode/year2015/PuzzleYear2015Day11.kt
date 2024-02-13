@@ -1,7 +1,6 @@
 package elianfabian.adventofcode.year2015
 
 import elianfabian.adventofcode.util.AocPuzzle
-import elianfabian.adventofcode.util.plusAssign
 
 /**
  * --- Day 11: Corporate Policy --- https://adventofcode.com/2015/day/11
@@ -64,25 +63,25 @@ private fun String.nextPassword(): String {
 
 private fun isValidPassword(password: String): Boolean {
 	return containsAtLeastOneIncreasingStraightOfThreeLetters(password) &&
-		doesNotContainIOL(password) &&
-		containsAtLeastTwoDifferentNonOverlappingPairsOfLetters(password)
+			doesNotContainIOL(password) &&
+			containsAtLeastTwoDifferentNonOverlappingPairsOfLetters(password)
 }
 
 private fun incrementStringLikeANumber(string: String): String {
-	val resultSb = StringBuilder()
+	return buildString {
+		for (char in string.reversed()) {
+			val newChar = char.nextInAlphabet()
 
-	for (char in string.reversed()) {
-		val newChar = char.nextInAlphabet()
+			append(newChar)
 
-		resultSb += newChar
-
-		if (newChar == 'a') continue
-		else {
-			return string.dropLast(resultSb.length) + resultSb.reversed()
+			if (newChar == 'a') {
+				continue
+			}
+			else {
+				return string.dropLast(length) + reversed()
+			}
 		}
 	}
-
-	return resultSb.toString()
 }
 
 private fun Char.nextInAlphabet(): Char {
@@ -101,13 +100,15 @@ private val alphabet = listOf(
  * First requirement
  */
 private fun containsAtLeastOneIncreasingStraightOfThreeLetters(string: String): Boolean {
-	string.forEachIndexed { index, currentChar ->
+	string.forEachIndexed { index, firstChar ->
 
-		val currentCharCode = currentChar.code
-		val nextCharCode = string.getOrNull(index + 1)?.code ?: -1
-		val nextNextCharCode = string.getOrNull(index + 2)?.code ?: -1
+		val firstCharCode = firstChar.code
+		val secondCharCode = string.getOrNull(index + 1)?.code ?: -1
+		val thirdCharCode = string.getOrNull(index + 2)?.code ?: -1
 
-		if (nextCharCode - currentCharCode == 1 && nextNextCharCode - nextCharCode == 1) return true
+		if (secondCharCode - firstCharCode == 1 && thirdCharCode - secondCharCode == 1) {
+			return true
+		}
 	}
 
 	return false
@@ -132,7 +133,9 @@ private fun containsAtLeastTwoDifferentNonOverlappingPairsOfLetters(string: Stri
 		if (currentChar == nextChar) {
 			letterPairs += "$currentChar$nextChar"
 
-			if (letterPairs.size >= minPairCount) return true
+			if (letterPairs.size >= minPairCount) {
+				return true
+			}
 		}
 	}
 

@@ -30,7 +30,7 @@ private fun getAllAocPuzzles(): List<AocPuzzle> {
 }
 
 fun getAllAocPuzzlesGroupByYearAndDay() = getAllAocPuzzles()
-	.sortedBy { "${it.year}-${it.day}" }
+	.sortedWith(compareBy<AocPuzzle> { it.year }.thenBy { it.day })
 	.groupBy { it.year }
 	.mapValues { it.value.associateBy { p -> p.day } }
 
