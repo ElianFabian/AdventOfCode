@@ -58,13 +58,18 @@ private val numberRegex = "-?\\d+\\.?".toRegex(RegexOption.DOT_MATCHES_ALL)
 
 private fun JsonElement.getSumOfAllNumbersWithCondition(): Float {
 	return when (this) {
-		is JsonArray     -> this.map { it.getSumOfAllNumbersWithCondition() }.sum()
-		is JsonObject    -> {
-			val isNotValidForSum = this.values.any { it.jsonPrimitiveOrNull.toString() == "\"red\"" }
-			if (isNotValidForSum) return 0F
+		is JsonArray -> this.map { it.getSumOfAllNumbersWithCondition() }.sum()
+		is JsonObject -> {
+			val isNotValidForSum = this.values.any {
+				it.jsonPrimitiveOrNull.toString() == "\"red\""
+			}
+			if (isNotValidForSum) {
+				return 0F
+			}
 
 			this.values.map { it.getSumOfAllNumbersWithCondition() }.sum()
 		}
+
 		is JsonPrimitive -> floatOrNull ?: 0F
 	}
 }

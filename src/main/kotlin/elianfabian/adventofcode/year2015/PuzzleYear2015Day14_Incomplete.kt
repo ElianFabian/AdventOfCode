@@ -28,7 +28,7 @@ object PuzzleYear2015Day14_Incomplete : AocPuzzle(2015, 14) {
 	override fun getResultOfPartOne(): Int {
 		val raceTimeInSeconds = 2503
 
-		val reindeerRaceInfoList = input.lines().map { line ->
+		val reindeerRaceInfoList = input.lineSequence().map { line ->
 			fromLineToReindeerRaceInfo(line)
 		}
 
@@ -55,7 +55,7 @@ object PuzzleYear2015Day14_Incomplete : AocPuzzle(2015, 14) {
 	override fun getResultOfPartTwo(): Int {
 		val raceTimeInSeconds = 2503
 
-		val infoByReindeerName = input.lines().associate { line ->
+		val infoByReindeerName = input.lineSequence().associate { line ->
 			val info = fromLineToReindeerRaceInfo(line)
 
 			info.reindeerName to info

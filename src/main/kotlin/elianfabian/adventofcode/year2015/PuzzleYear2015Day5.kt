@@ -28,7 +28,7 @@ object PuzzleYear2015Day5 : AocPuzzle(2015, 5) {
 	 * How many strings are nice?
 	 */
 	override fun getResultOfPartOne(): Int {
-		val allStrings = input.lines()
+		val allStrings = input.lineSequence()
 
 		return allStrings.count { isStringNiceInPartOne(it) }
 	}
@@ -52,7 +52,7 @@ object PuzzleYear2015Day5 : AocPuzzle(2015, 5) {
 	 * How many strings are nice under these new rules?
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val allStrings = input.lines()
+		val allStrings = input.lineSequence()
 
 		return allStrings.count { isStringNiceInPartTwo(it) }
 	}
@@ -86,7 +86,9 @@ private fun hasAtLeastOneLetterThatAppearsTwiceInARow(string: String): Boolean {
 
 		val nextChar = string.getOrNull(index + 1)
 
-		if (currentChar == nextChar) return true
+		if (currentChar == nextChar) {
+			return true
+		}
 	}
 
 	return false
@@ -101,7 +103,9 @@ private fun notContainsThePairsAbCdPqXy(string: String): Boolean {
 
 		val currentPair = "$currentChar$nextChar"
 
-		if (currentPair in forbiddenPairs) return false
+		if (currentPair in forbiddenPairs) {
+			return false
+		}
 	}
 
 	return true
@@ -124,9 +128,13 @@ private fun containsAPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(s
 
 			letterPairsAndCount[currentPair] = newCount
 
-			if (newCount >= minPairCount) return true
+			if (newCount >= minPairCount) {
+				return true
+			}
 		}
-		else letterPairsAndCount[currentPair] = 1
+		else {
+			letterPairsAndCount[currentPair] = 1
+		}
 	}
 
 	return false
@@ -138,7 +146,9 @@ private fun containsAtLeastOnLetterWhichRepeatsWithOneLetterBetweenThem(string: 
 		val previousChar = string.getOrNull(index - 1)
 		val nextChar = string.getOrNull(index + 1)
 
-		if ((previousChar == nextChar) && (currentChar != previousChar)) return true
+		if ((previousChar == nextChar) && (currentChar != previousChar)) {
+			return true
+		}
 	}
 
 	return false

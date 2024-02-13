@@ -27,7 +27,9 @@ object PuzzleYear2015Day10 : AocPuzzle(2015, 10) {
 	 * Starting with the digits in your puzzle input, apply this process 40 times. What is the length of the result?
 	 */
 	override fun getResultOfPartOne(): Int {
-		val result = applyTransformation(times = 40, initialValue = input) { convertToLookAndSay(it) }
+		val result = applyTransformation(times = 40, initialValue = input) {
+			convertToLookAndSay(it)
+		}
 
 		return result.length
 	}
@@ -40,7 +42,9 @@ object PuzzleYear2015Day10 : AocPuzzle(2015, 10) {
 	 * Now, starting again with the digits in your puzzle input, apply this process 50 times. What is the length of the new result?
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val result = applyTransformation(times = 50, initialValue = input) { convertToLookAndSay(it) }
+		val result = applyTransformation(times = 50, initialValue = input) {
+			convertToLookAndSay(it)
+		}
 
 		return result.length
 	}
@@ -55,25 +59,25 @@ private fun convertToLookAndSay(numberString: String): String {
 	var previousNumber = Char.MIN_VALUE
 	var currentNumberCount = 0
 
-	// This is for better performance
-	val resultSb = StringBuilder("")
+	return buildString {
+		numberString.forEach { currentNumber ->
+			if (currentNumber == previousNumber) {
+				currentNumberCount++
+			}
+			else {
+				if (currentNumberCount != 0) {
+					append("$currentNumberCount$previousNumber")
+				}
 
-	numberString.forEach { currentNumber ->
-
-		if (currentNumber == previousNumber) {
-			currentNumberCount++
+				previousNumber = currentNumber
+				currentNumberCount = 1
+			}
 		}
-		else {
-			resultSb += if (currentNumberCount != 0) "$currentNumberCount$previousNumber" else ""
 
-			previousNumber = currentNumber
-			currentNumberCount = 1
+		if (currentNumberCount != 0) {
+			append("$currentNumberCount$previousNumber")
 		}
 	}
-
-	resultSb += if (currentNumberCount != 0) "$currentNumberCount$previousNumber" else ""
-
-	return resultSb.toString()
 }
 
 //endregion

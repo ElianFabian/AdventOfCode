@@ -22,7 +22,7 @@ fun <T> Array<Array<T>>.toNiceString() = this.joinToString("\n") { "${it.toList(
 fun clamp(value: Int, min: Int, max: Int) = when {
 	value < min -> min
 	value > max -> max
-	else        -> value
+	else -> value
 }
 
 // These functions are inspired from
@@ -149,8 +149,7 @@ operator fun StringBuilder.plusAssign(char: Char) {
 inline fun <T> applyTransformation(times: Int, initialValue: T, action: (value: T) -> T): T {
 	var result = initialValue
 
-	repeat(times)
-	{
+	repeat(times) {
 		result = action(result)
 	}
 	return result

@@ -30,7 +30,7 @@ private fun getAllAocPuzzles(): List<AocPuzzle> {
 }
 
 fun getAllAocPuzzlesGroupByYearAndDay() = getAllAocPuzzles()
-	.sortedBy { "${it.year}-${it.day}" }
+	.sortedWith(compareBy<AocPuzzle> { it.year }.thenBy { it.day })
 	.groupBy { it.year }
 	.mapValues { it.value.associateBy { p -> p.day } }
 
@@ -65,7 +65,7 @@ fun showPuzzleFromYearAndDay(
 	println("ERROR: the puzzle from year '$year' and day '$day' does not exist.")
 }
 
-fun showAllPuzzlesOfAllTheYears() {
+fun showAllPuzzlesOfAllYears() {
 	val aocPuzzles = getAllAocPuzzlesGroupByYearAndDay()
 
 	for ((year, days) in aocPuzzles) {

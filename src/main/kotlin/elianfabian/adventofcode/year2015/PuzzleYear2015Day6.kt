@@ -33,7 +33,7 @@ object PuzzleYear2015Day6 : AocPuzzle(2015, 6) {
 		// True: turned on, False: turned off
 		val grid = Matrix2D(gridWidth, gridHeight) { false }
 
-		val instructions = input.lines().map { line ->
+		val instructions = input.lineSequence().map { line ->
 			fromLineToInstructionInfo(line)
 		}
 
@@ -43,9 +43,9 @@ object PuzzleYear2015Day6 : AocPuzzle(2015, 6) {
 				bottomRightCorner = info.bottomRightCorner,
 				getNewValue = { oldValue ->
 					when (info.action) {
-						Action.TurnOn  -> true
+						Action.TurnOn -> true
 						Action.TurnOff -> false
-						Action.Toggle  -> !oldValue
+						Action.Toggle -> !oldValue
 					}
 				},
 			)
@@ -80,7 +80,7 @@ object PuzzleYear2015Day6 : AocPuzzle(2015, 6) {
 
 		val grid = Matrix2D(gridWidth, gridHeight) { 0 }
 
-		val instructions = input.lines().map { fromLineToInstructionInfo(it) }
+		val instructions = input.lineSequence().map { fromLineToInstructionInfo(it) }
 
 		instructions.forEach { info ->
 			grid.setValueInSquare(
@@ -88,9 +88,9 @@ object PuzzleYear2015Day6 : AocPuzzle(2015, 6) {
 				bottomRightCorner = info.bottomRightCorner,
 				getNewValue = { oldValue ->
 					when (info.action) {
-						Action.TurnOn  -> oldValue + 1
+						Action.TurnOn -> oldValue + 1
 						Action.TurnOff -> clamp(oldValue - 1, 0, Int.MAX_VALUE)
-						Action.Toggle  -> oldValue + 2
+						Action.Toggle -> oldValue + 2
 					}
 				},
 			)
@@ -143,10 +143,10 @@ private enum class Action {
 
 	companion object {
 		fun fromString(action: String) = when (action) {
-			"turn on"  -> TurnOn
+			"turn on" -> TurnOn
 			"turn off" -> TurnOff
-			"toggle"   -> Toggle
-			else       -> error("Unexpected string action '$action'.")
+			"toggle" -> Toggle
+			else -> error("Unexpected string action '$action'.")
 		}
 	}
 }

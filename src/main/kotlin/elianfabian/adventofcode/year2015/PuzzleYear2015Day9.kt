@@ -33,16 +33,26 @@ object PuzzleYear2015Day9 : AocPuzzle(2015, 9) {
 	 * What is the distance of the shortest route?
 	 */
 	override fun getResultOfPartOne(): Int {
-		val info = input.lines().map { fromLineToCountriesDistanceInfo(it) }
+		val info = input.lineSequence().map { fromLineToCountriesDistanceInfo(it) }
 
-		val allCountries = info.map { listOf(it.firstCountryName, it.secondCountryName) }.flatten().distinct()
-		val distanceByPairOfCountries = info.associate { "${it.firstCountryName}-${it.secondCountryName}" to it.distance }
+		val allCountries = info
+			.map {
+				listOf(it.firstCountryName, it.secondCountryName)
+			}
+			.flatten()
+			.distinct()
+			.toList()
+		val distanceByPairOfCountries = info.associate {
+			"${it.firstCountryName}-${it.secondCountryName}" to it.distance
+		}
 
 		fun getDistanceBetweenCountries(
 			firstCountryName: String,
 			secondCountryName: String,
 		): Int {
-			return distanceByPairOfCountries["$firstCountryName-$secondCountryName"] ?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"] ?: 0
+			return distanceByPairOfCountries["$firstCountryName-$secondCountryName"]
+				?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"]
+				?: 0
 		}
 
 		val allPossibleRoutes = allCountries.permutationsWithoutReplacement().ignoreReversed()
@@ -75,16 +85,24 @@ object PuzzleYear2015Day9 : AocPuzzle(2015, 9) {
 	 * What is the distance of the longest route?
 	 */
 	override fun getResultOfPartTwo(): Int {
-		val info = input.lines().map { fromLineToCountriesDistanceInfo(it) }
+		val info = input.lineSequence().map { fromLineToCountriesDistanceInfo(it) }
 
-		val allCountries = info.map { listOf(it.firstCountryName, it.secondCountryName) }.flatten().distinct()
+		val allCountries = info
+			.map {
+				listOf(it.firstCountryName, it.secondCountryName)
+			}
+			.flatten()
+			.distinct()
+			.toList()
 		val distanceByPairOfCountries = info.associate { "${it.firstCountryName}-${it.secondCountryName}" to it.distance }
 
 		fun getDistanceBetweenCountries(
 			firstCountryName: String,
 			secondCountryName: String,
 		): Int {
-			return distanceByPairOfCountries["$firstCountryName-$secondCountryName"] ?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"] ?: 0
+			return distanceByPairOfCountries["$firstCountryName-$secondCountryName"]
+				?: distanceByPairOfCountries["$secondCountryName-$firstCountryName"]
+				?: 0
 		}
 
 		val allPossibleRoutes = allCountries.permutationsWithoutReplacement().ignoreReversed()

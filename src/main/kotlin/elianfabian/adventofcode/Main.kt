@@ -14,5 +14,5 @@ import elianfabian.adventofcode.util.*
 fun main() {
 	showLastPuzzle()
 	//showPuzzleFromYearAndDay(year = 2015, day = 13)
-	//showAllPuzzlesOfAllTheYears()
+	//showAllPuzzlesOfAllYears()
 }
